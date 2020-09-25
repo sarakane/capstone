@@ -46,6 +46,14 @@ Builds the app for production to the `build` folder.<br />
   <td>Make README outline</td>
   <td>8:39-9:14</td>
  </tr>
+ <tr>
+  <td>Add proposal to project</td>
+  <td>9:14-9:37</td>
+ </tr>
+ <tr>
+  <td>Work on website mockup</td>
+  <td>9:37-12:08</td>
+ </tr>
 </table>
 </details>
 
