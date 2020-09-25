@@ -3,14 +3,15 @@
 #### By _**Sara Kane**_
 
 ## Description
-
+Website that allows users to store online resources they have found helpful for learning a topic and share those resources with others. Users are able to create a resource library for a specific topic or a class (examples: History 101 or Introduction to Programming) and add resources such as documentation, tutorials, online videos, or additional courses they found helpful related to that topic or class.
 
 ## Specifications
 
+### 🎨 Mockups & Diagrams
 
-## Setup/Intstallation
+## ⚙ Setup/Intstallation
 
-### Available Scripts
+### 🏃‍♀️ Available Scripts
 <details>
   <summary>In the project directory, you can run:</summary>
 
@@ -25,11 +26,9 @@ Launches the test runner in the interactive watch mode.<br />
 Builds the app for production to the `build` folder.<br />
 </details>
 
-## Known Bugs
+## 🐛 Known Bugs
 
-## Teachnologies Used
-
-## Work Log
+## 📓 Work Log
 <details>
   <summary>Log of time spent on project</summary>
 <h4>2020.09.25</h4>
@@ -62,15 +61,20 @@ Builds the app for production to the `build` folder.<br />
   <td>Research potential tools to use for hosting, database, deciding if I need to make an api if I want the possibility of making a mobile version, etc</td>
   <td>2:06-3:52</td>
  </tr>
+  <tr>
+  <td>Update README</td>
+  <td>3:52-4:11</td>
+ </tr>
 </table>
 </details>
 
-## Technologies Used
+## 💻 Technologies Used
 * VS Code
 * Git
+* React
 
 
-## License
+## 🔑 License
 *This site is licensed under the MIT license.*
 
 Copyright (c) 2020 **_Sara Kane_**
