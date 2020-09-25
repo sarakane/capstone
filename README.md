@@ -58,6 +58,10 @@ Builds the app for production to the `build` folder.<br />
   <td>Continue to work on website mockup</td>
   <td>1:08-2:06</td>
  </tr>
+ <tr>
+  <td>Research potential tools to use for hosting, database, deciding if I need to make an api if I want the possibility of making a mobile version, etc</td>
+  <td>2:06-3:52</td>
+ </tr>
 </table>
 </details>
 
