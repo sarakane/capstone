@@ -54,6 +54,10 @@ Builds the app for production to the `build` folder.<br />
   <td>Work on website mockup</td>
   <td>9:37-12:08</td>
  </tr>
+  <tr>
+  <td>Continue to work on website mockup</td>
+  <td>1:08-2:06</td>
+ </tr>
 </table>
 </details>
 
