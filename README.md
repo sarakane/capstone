@@ -65,6 +65,11 @@ Builds the app for production to the `build` folder.<br />
   <td>Update README</td>
   <td>3:52-4:11</td>
  </tr>
+  </tr>
+  <tr>
+  <td>Continue working on wireframe/component diagram</td>
+  <td>4:11-5:00</td>
+ </tr>
 </table>
 </details>
 
