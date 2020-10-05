@@ -12,11 +12,23 @@ class LibraryControl extends React.Component {
     };
   }
 
+  handleClick = () =>{
+    this.setState(prevState => ({
+      formVisibleOnPage: !prevState.formVisibleOnPage
+    }));
+  }
+
+  handleAddingNewLibraryToList = () => {
+      this.setState(prevState => ({
+        formVisibleOnPage: !prevState.formVisibleOnPage
+      }));
+    }
+
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
     if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewLibraryForm />
+      currentlyVisibleState = <NewLibraryForm onNewLibraryCreation={this.handleAddingNewLibraryToList} />
       buttonText = "Return to Library List";
     } else {
       currentlyVisibleState = <LibraryList />;
