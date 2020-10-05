@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
 
-function LibraryList() {
+function LibraryList(props) {
 
   useFirestoreConnect([
     { collection: 'libraries' }
@@ -17,7 +18,7 @@ function LibraryList() {
         <hr/>
         {libraries.map((library) => {
           return (
-            <div>
+            <div onClick = {() => props.whenLibraryClicked(library.id)}>
               <h2>{library.libraryName}</h2>
               <hr/>
             </div>
@@ -33,6 +34,10 @@ function LibraryList() {
       </React.Fragment>
     )
   }
+}
+
+LibraryList.propTypes = {
+  whenLibraryClicked: PropTypes.func
 }
 
 export default LibraryList;
