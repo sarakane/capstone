@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SectionList from '../sections/SectionList'
 
 function LibraryDetail(props) {
   const { library, onClickingDelete, onClickingEdit } = props;
@@ -12,6 +13,7 @@ function LibraryDetail(props) {
       <button onClick={() => onClickingDelete(library.id)}>Delete</button>
       <hr />
       <h3>Sections</h3>
+      <SectionList libraryId={library.id} />
       <button>New Section</button>
       <hr />
     </React.Fragment>
