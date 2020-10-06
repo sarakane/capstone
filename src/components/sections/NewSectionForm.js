@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 
-function NewSectionForm(props) {
+function NewSectionForm({onNewSectionCreation, libraryId}) {
   const firestore = useFirestore();
 
   function addSectionToFirestore(event) {
     event.preventDefault();
 
-    props.onNewSectionCreation();
+    onNewSectionCreation();
 
     return firestore.collection('sections').add(
       {
         sectionName: event.target.sectionName.value,
         creatorId: "apple1",
-        libraryId: ""
+        libraryId
       }
     );
   }
@@ -34,7 +34,8 @@ function NewSectionForm(props) {
 }
 
 NewSectionForm.propTypes = {
-  onNewSectionCreation: PropTypes.func
+  onNewSectionCreation: PropTypes.func,
+  libraryId: PropTypes.string
 }
 
 export default NewSectionForm;

@@ -12,7 +12,8 @@ class LibraryControl extends React.Component {
     this.state = {
       formVisibleOnPage: false,
       editing: false,
-      selectedLibrary: null
+      selectedLibrary: null,
+      selectedSection: null
     };
   }
 
@@ -45,6 +46,10 @@ class LibraryControl extends React.Component {
     })
   }
 
+  handleChangingSelectedSection = (id) => {
+    
+  }
+
   handleDeletingLibrary = (id) => {
     this.props.firestore.delete({ collection: 'libraries', doc: id });
     this.setState({ selectedLibrary: null });
@@ -68,7 +73,10 @@ class LibraryControl extends React.Component {
       currentlyVisibleState = <EditLibraryForm library={this.state.selectedLibrary} onEditLibrary={this.handleEditingLibrary} />
       buttonText = "Return to Ticket List";
     } else if (this.state.selectedLibrary !=null) {
-      currentlyVisibleState = <LibraryDetail library={this.state.selectedLibrary} onClickingDelete={this.handleDeletingLibrary}  onClickingEdit={this.handleEditClick}/>
+      currentlyVisibleState = <LibraryDetail library={this.state.selectedLibrary} 
+        onClickingDelete={this.handleDeletingLibrary}  
+        onClickingEdit={this.handleEditClick}
+        whenSectionClicked={this.handleChangingSelectedSection}/>
       buttonText = "Return to Library List";
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewLibraryForm onNewLibraryCreation={this.handleAddingNewLibraryToList} />

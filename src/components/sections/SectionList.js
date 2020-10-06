@@ -5,15 +5,9 @@ import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
 
 function SectionList({libraryId, whenSectionClicked}) {
-
   useFirestoreConnect([
     { collection: 'sections' }
   ]);
-
-  // const selectSectionsForLibrary = createSelector(
-  //   state => state.firestore.ordered.sections,
-  //   sections => sections.filter(section => section.libraryId === libraryId)
-  // )
 
   const sections = useSelector(state => state.firestore.ordered.sections);
   if(isLoaded(sections)) {
