@@ -1,37 +1,80 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withFirestore, isLoaded } from 'react-redux-firebase';
-import NewLibraryForm from './NewLibraryForm';
-import LibraryList from './LibraryList';
+import { withFirestore } from 'react-redux-firebase';
+import NewLibraryForm from './libraries/NewLibraryForm';
+import EditLibraryForm from './libraries/EditLibraryForm';
+import LibraryList from './libraries/LibraryList';
+import LibraryDetail from './libraries/LibraryDetail';
 
 class LibraryControl extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      formVisibleOnPage: false
+      formVisibleOnPage: false,
+      editing: false,
+      selectedLibrary: null
     };
   }
 
   handleClick = () =>{
-    this.setState(prevState => ({
-      formVisibleOnPage: !prevState.formVisibleOnPage
-    }));
+    if (this.state.selectedLibrary != null) {
+      this.setState({
+        selectedLibrary: null,
+        editing: false
+      });
+    } else {
+      this.setState(prevState => ({
+          formVisibleOnPage: !prevState.formVisibleOnPage
+      }));}
   }
 
   handleAddingNewLibraryToList = () => {
       this.setState(prevState => ({
         formVisibleOnPage: !prevState.formVisibleOnPage
       }));
-    }
+  }
+  
+  handleChangingSelectedLibrary = (id) => {
+    this.props.firestore.get({collection: 'libraries', doc: id}).then((library) => {
+      const firestoreLibrary = {
+        libraryName: library.get("libraryName"),
+        creatorId: library.get("creatorId"),
+        id: library.id
+      }
+      this.setState({selectedLibrary: firestoreLibrary });
+    })
+  }
+
+  handleDeletingLibrary = (id) => {
+    this.props.firestore.delete({ collection: 'libraries', doc: id });
+    this.setState({ selectedLibrary: null });
+  }
+
+  handleEditClick = () => {
+    this.setState({editing: true});
+  }
+
+  handleEditingLibrary = () => {
+    this.setState({
+      editing: false,
+      selectedLibrary: null
+    });
+  } 
 
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    if (this.state.formVisibleOnPage) {
+    if(this.state.editing) {
+      currentlyVisibleState = <EditLibraryForm library={this.state.selectedLibrary} onEditLibrary={this.handleEditingLibrary} />
+      buttonText = "Return to Ticket List";
+    } else if (this.state.selectedLibrary !=null) {
+      currentlyVisibleState = <LibraryDetail library={this.state.selectedLibrary} onClickingDelete={this.handleDeletingLibrary}  onClickingEdit={this.handleEditClick}/>
+      buttonText = "Return to Library List";
+    } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewLibraryForm onNewLibraryCreation={this.handleAddingNewLibraryToList} />
       buttonText = "Return to Library List";
     } else {
-      currentlyVisibleState = <LibraryList />;
+      currentlyVisibleState = <LibraryList whenLibraryClicked={this.handleChangingSelectedLibrary}/>;
       buttonText = "Add Library";
     }
     return (
@@ -44,11 +87,10 @@ class LibraryControl extends React.Component {
 }
 
 // const mapStateToProps = state => {
-//   return {
-    
-//   }
+//   return {}
 // }
 
 // LibraryControl = connect(mapStateToProps)(LibraryControl);
+LibraryControl = connect()(LibraryControl);
 
-export default LibraryControl;
+export default withFirestore(LibraryControl);
