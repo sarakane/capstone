@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 
+const addMargin = {
+  marginBottom: '5px'
+}
+
 function NewLibraryForm(props) {
   const firestore = useFirestore();
 
@@ -21,12 +25,16 @@ function NewLibraryForm(props) {
   return (
     <React.Fragment>
       <form onSubmit={addLibraryToFirestore}>
-        <input
-          type='text'
-          name='libraryName'
-          placeholder='New Library' 
-          required />
-        <button type='submit' className="btn pink lighten-2">Create</button>
+        <div className="row">
+          <div className="input-field col s6">
+            <input
+              type='text'
+              name='libraryName'
+              placeholder='New Library' 
+              required />
+            </div>
+          </div>
+        <button type='submit' className="btn pink lighten-2" style={addMargin}>Create</button>
       </form>
     </React.Fragment>
   )

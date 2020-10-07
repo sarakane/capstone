@@ -14,11 +14,11 @@ function Navigation(){
           <a href="#" className="brand-logo" style={brandLogoStyle}>Resourcey</a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {/* eslint-disable-next-line */}
-            <li><a href="sass.html">About</a></li>
+            <li><a href="/about">About</a></li>
             {/* eslint-disable-next-line */}
-            <li><a href="badges.html">Sign In</a></li>
+            <li><a href="/signin">Sign In</a></li>
             {/* eslint-disable-next-line */}
-            <li><a href="collapsible.html">Sign Up</a></li>
+            <li><a href="/signup">Sign Up</a></li>
           </ul>
         </div>
       </nav> 

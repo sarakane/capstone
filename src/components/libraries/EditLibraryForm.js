@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 
+const editButtonStyle = {
+  marginBottom: '5px'
+}
+
 function EditLibraryForm(props) {
   const firestore = useFirestore();
   const { library } = props;
@@ -23,7 +27,7 @@ function EditLibraryForm(props) {
           name='libraryName'
           defaultValue={library.libraryName}
           required />
-        <button type='submit' className='btn pink lighten-2'>Edit</button>
+        <button type='submit' className='btn pink lighten-2' style={editButtonStyle}>Edit</button>
       </form>
     </React.Fragment>
   )
