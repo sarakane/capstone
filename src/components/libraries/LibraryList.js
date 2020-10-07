@@ -26,7 +26,7 @@ function LibraryList(props) {
         <hr/>
         {libraries.map((library) => {
           return (
-            <div onClick={() => props.whenLibraryClicked(library.id)}>
+            <div onClick={() => props.whenLibraryClicked(library.id)} key={library.id}>
               <h3 style={listStyle} className="library-list">{library.libraryName}</h3>
               <hr/>
             </div>
@@ -40,14 +40,14 @@ function LibraryList(props) {
       <React.Fragment>
         <h1>Library List</h1>
         <hr/> 
-        <div class="preloader-wrapper small active">
-          <div class="spinner-layer spinner-green-only">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
-            </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
+        <div className="preloader-wrapper small active">
+          <div className="spinner-layer spinner-green-only">
+            <div className="circle-clipper left">
+              <div className="circle"></div>
+            </div><div className="gap-patch">
+              <div className="circle"></div>
+            </div><div className="circle-clipper right">
+              <div className="circle"></div>
             </div>
           </div>
         </div>

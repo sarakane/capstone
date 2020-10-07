@@ -9,7 +9,7 @@ function Navigation(){
   return (
     <React.Fragment>      
       <nav className="blue-grey">
-        <div Name="nav-wrapper">
+        <div className="nav-wrapper">
           {/* eslint-disable-next-line */}
           <a href="#" className="brand-logo" style={brandLogoStyle}>Resourcey</a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">

@@ -23,7 +23,7 @@ function EditLibraryForm(props) {
           name='libraryName'
           defaultValue={library.libraryName}
           required />
-        <button type='submit'>Edit</button>
+        <button type='submit' className='btn pink lighten-2'>Edit</button>
       </form>
     </React.Fragment>
   )

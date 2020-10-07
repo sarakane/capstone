@@ -96,7 +96,7 @@ class ProjectControl extends React.Component {
     } else if (this.state.selectedSection != null){
       currentlyVisibleState = <SectionDetails section={this.state.selectedSection} 
                                 onClickingDelete={this.handleDeletingSection} 
-                                onClickingEdit={null} />
+                                />
       buttonText = "Return";
     } else if (this.state.selectedLibrary != null) {
       currentlyVisibleState = <LibraryDetail library={this.state.selectedLibrary} 
