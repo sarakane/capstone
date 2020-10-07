@@ -6,13 +6,14 @@ import EditLibraryForm from './libraries/EditLibraryForm';
 import LibraryList from './libraries/LibraryList';
 import LibraryDetail from './libraries/LibraryDetail';
 import SectionDetails from './sections/SectionDetails';
+import ResourceDetails from './resources/ResourceDetails';
 
 class ProjectControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       formVisibleOnPage: false,
-      editing: false,
+      editingLibrary: false,
       selectedLibrary: null,
       selectedSection: null,
       selectedResource: null
@@ -23,12 +24,12 @@ class ProjectControl extends React.Component {
     if(this.state.selectedSection != null) {
       this.setState({
         selectedSection: null,
-        editing: false
+        editingLibrary: false
       });
     } else if (this.state.selectedLibrary != null) {
       this.setState({
         selectedLibrary: null,
-        editing: false
+        editingLibrary: false
       });
     } else {
       this.setState(prevState => ({
@@ -73,12 +74,12 @@ class ProjectControl extends React.Component {
   }
 
   handleEditClick = () => {
-    this.setState({editing: true});
+    this.setState({editingLibrary: true});
   }
 
   handleEditingLibrary = () => {
     this.setState({
-      editing: false,
+      editingLibrary: false,
       selectedLibrary: null
     });
   } 
@@ -93,6 +94,7 @@ class ProjectControl extends React.Component {
       const firestoreResource = {
         resourceName: resource.get("resourceName"),
         url: resource.get("url"),
+        description: resource.get("description"),
         sectionId: resource.get("sectionId"),
         creatorId: resource.get("creatorId"),
         id: resource.id
@@ -106,9 +108,14 @@ class ProjectControl extends React.Component {
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    if(this.state.editing) {
+    if(this.state.editingLibrary) {
       currentlyVisibleState = <EditLibraryForm library={this.state.selectedLibrary} onEditLibrary={this.handleEditingLibrary} />
-      buttonText = "Return to Ticket List";
+      buttonText = "Return to Library List";
+    } else if (this.state.selectedResource != null) {
+      currentlyVisibleState = <ResourceDetails resource={this.state.selectedResource}
+                                onClickingDelete={this.handleDeletingResource}
+                                onClickingEdit={this.handleEditingResource} />
+      buttonText = "Return to Section"
     } else if (this.state.selectedSection != null){
       currentlyVisibleState = <SectionDetails section={this.state.selectedSection} 
                                 onClickingDelete={this.handleDeletingSection}
@@ -137,11 +144,7 @@ class ProjectControl extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {}
-// }
 
-// LibraryControl = connect(mapStateToProps)(LibraryControl);
 ProjectControl = connect()(ProjectControl);
 
 export default withFirestore(ProjectControl);
