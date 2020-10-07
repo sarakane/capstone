@@ -1,13 +1,13 @@
 import React from 'react';
 import Navigation from './components/Navigation';
-import LibraryControl from './components/LibraryControl';
+import ProjectControl from './components/ProjectControl';
 
 function App() {
   return (
     <React.Fragment>
       <Navigation />
       <div className="container">
-        <LibraryControl />
+        <ProjectControl />
       </div>
     </React.Fragment>
   );

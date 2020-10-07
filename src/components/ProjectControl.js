@@ -7,7 +7,7 @@ import LibraryList from './libraries/LibraryList';
 import LibraryDetail from './libraries/LibraryDetail';
 import SectionDetails from './sections/SectionDetails';
 
-class LibraryControl extends React.Component {
+class ProjectControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,6 +82,11 @@ class LibraryControl extends React.Component {
     });
   } 
 
+  handleDeletingSection = (id) => {
+    this.props.firestore.delete({ collection: 'sections', doc: id });
+    this.setState({ selectedSection: null });
+  }
+
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
@@ -89,13 +94,15 @@ class LibraryControl extends React.Component {
       currentlyVisibleState = <EditLibraryForm library={this.state.selectedLibrary} onEditLibrary={this.handleEditingLibrary} />
       buttonText = "Return to Ticket List";
     } else if (this.state.selectedSection != null){
-      currentlyVisibleState = <SectionDetails section={this.state.selectedSection} onClickingDelete={null} onClickingEdit={null} />
+      currentlyVisibleState = <SectionDetails section={this.state.selectedSection} 
+                                onClickingDelete={this.handleDeletingSection} 
+                                onClickingEdit={null} />
       buttonText = "Return";
     } else if (this.state.selectedLibrary != null) {
       currentlyVisibleState = <LibraryDetail library={this.state.selectedLibrary} 
-        onClickingDelete={this.handleDeletingLibrary}  
-        onClickingEdit={this.handleEditClick}
-        whenSectionClicked={this.handleChangingSelectedSection}/>
+                                onClickingDelete={this.handleDeletingLibrary}  
+                                onClickingEdit={this.handleEditClick}
+                                whenSectionClicked={this.handleChangingSelectedSection}/>
       buttonText = "Return to Library List";
     } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewLibraryForm onNewLibraryCreation={this.handleAddingNewLibraryToList} />
@@ -118,6 +125,6 @@ class LibraryControl extends React.Component {
 // }
 
 // LibraryControl = connect(mapStateToProps)(LibraryControl);
-LibraryControl = connect()(LibraryControl);
+ProjectControl = connect()(ProjectControl);
 
-export default withFirestore(LibraryControl);
+export default withFirestore(ProjectControl);

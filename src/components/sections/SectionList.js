@@ -25,7 +25,7 @@ function SectionList({libraryId, whenSectionClicked}) {
           {displaySections.map((section) => {
             return (
               <div onClick = {() => whenSectionClicked(section.id)}>
-                <h4>{section.sectionName}</h4>
+                <h4 className="section-list">{section.sectionName}</h4>
                 <hr/>
               </div>
               

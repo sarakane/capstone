@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
+const listStyle = {
+  marginLeft: '20px',
+  cursor: 'pointer',
+  hover: {
+    color: 'blue'
+  }  
+}
+
 function LibraryList(props) {
 
   useFirestoreConnect([
@@ -19,7 +27,7 @@ function LibraryList(props) {
         {libraries.map((library) => {
           return (
             <div onClick={() => props.whenLibraryClicked(library.id)}>
-              <h3>{library.libraryName}</h3>
+              <h3 style={listStyle} className="library-list">{library.libraryName}</h3>
               <hr/>
             </div>
             
