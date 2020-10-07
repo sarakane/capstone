@@ -5,6 +5,7 @@ import NewLibraryForm from './libraries/NewLibraryForm';
 import EditLibraryForm from './libraries/EditLibraryForm';
 import LibraryList from './libraries/LibraryList';
 import LibraryDetail from './libraries/LibraryDetail';
+import SectionDetails from './sections/SectionDetails';
 
 class LibraryControl extends React.Component {
   constructor(props) {
@@ -18,7 +19,12 @@ class LibraryControl extends React.Component {
   }
 
   handleClick = () =>{
-    if (this.state.selectedLibrary != null) {
+    if(this.state.selectedSection != null) {
+      this.setState({
+        selectedSection: null,
+        editing: false
+      });
+    } else if (this.state.selectedLibrary != null) {
       this.setState({
         selectedLibrary: null,
         editing: false
@@ -47,7 +53,17 @@ class LibraryControl extends React.Component {
   }
 
   handleChangingSelectedSection = (id) => {
-    
+    this.props.firestore.get({collection: 'sections', doc: id}).then((section) => {
+      const firestoreSection = {
+        sectionName: section.get("sectionName"),
+        libraryId: section.get("libraryId"),
+        creatorId: section.get("creatorId"),
+        id: section.id
+      }
+      this.setState({
+        selectedSection: firestoreSection
+      });
+    })
   }
 
   handleDeletingLibrary = (id) => {
@@ -72,7 +88,10 @@ class LibraryControl extends React.Component {
     if(this.state.editing) {
       currentlyVisibleState = <EditLibraryForm library={this.state.selectedLibrary} onEditLibrary={this.handleEditingLibrary} />
       buttonText = "Return to Ticket List";
-    } else if (this.state.selectedLibrary !=null) {
+    } else if (this.state.selectedSection != null){
+      currentlyVisibleState = <SectionDetails section={this.state.selectedSection} onClickingDelete={null} onClickingEdit={null} />
+      buttonText = "Return";
+    } else if (this.state.selectedLibrary != null) {
       currentlyVisibleState = <LibraryDetail library={this.state.selectedLibrary} 
         onClickingDelete={this.handleDeletingLibrary}  
         onClickingEdit={this.handleEditClick}

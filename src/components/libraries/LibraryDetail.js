@@ -4,7 +4,7 @@ import SectionList from '../sections/SectionList'
 import NewSectionForm from '../sections/NewSectionForm';
 
 function LibraryDetail(props) {
-  const { library, onClickingDelete, onClickingEdit } = props;
+  const { library, onClickingDelete, onClickingEdit, whenSectionClicked } = props;
   const [addingSection, setAddingSection] = useState(false);
 
   const toggleNewSectionForm = () => {
@@ -19,7 +19,7 @@ function LibraryDetail(props) {
       <button onClick={() => onClickingDelete(library.id)}>Delete</button>
       <hr />
       <h3>Sections</h3>
-      <SectionList libraryId={library.id} />
+      <SectionList libraryId={library.id} whenSectionClicked={whenSectionClicked}/>
       {addingSection && <NewSectionForm onNewSectionCreation={toggleNewSectionForm} libraryId={library.id}/>}
       <button onClick={toggleNewSectionForm}>{addingSection ? "Cancel": "New Section"}</button>
       <hr />
