@@ -10,16 +10,18 @@ const editButtonStyle = {
 function SectionDetail(props) {
   const { section, onClickingDelete} = props;
   const [editing, setEditing] = useState(false);
+  const [sectionName, setSectionName] = useState(section.sectionName);
 
   const toggleEditSectionForm = () => {
     setEditing(!editing);
   }
 
+
   return (
     <React.Fragment>
       <h1>Section</h1>
-      {editing && <EditSectionForm section={section} onEditSection={toggleEditSectionForm}/>}
-      {!editing && <h2>{section.sectionName}</h2>}
+      {editing && <EditSectionForm section={section} onEditSection={toggleEditSectionForm} setSectionName={setSectionName}/>}
+      {!editing && <h2>{sectionName}</h2>}
       <button onClick={toggleEditSectionForm} style={editButtonStyle} className="btn cyan accent-4">{!editing? "Edit": "Cancel"}</button>
       <button onClick={() => onClickingDelete(section.id)} className="btn cyan accent-4">Delete</button>
       <hr />

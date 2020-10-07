@@ -6,14 +6,16 @@ const createButtonStyle = {
   marginBottom: '5px'
 }
 
-function EditSectionForm({section, onEditSection}) {
+function EditSectionForm({section, onEditSection, setSectionName}) {
   const firestore = useFirestore();
 
   function handleEditSectionFormSubmission(event) {
     event.preventDefault();
+    const sectionName = event.target.sectionName.value;
+    setSectionName(sectionName);
     onEditSection();
     const propertiesToUpdate = {
-      sectionName: event.target.sectionName.value
+      sectionName: sectionName
     }
     return firestore.update({collection: 'sections', doc: section.id}, propertiesToUpdate);
   }
@@ -34,7 +36,8 @@ function EditSectionForm({section, onEditSection}) {
 
 EditSectionForm.propTypes = {
   onEditSection: PropTypes.func,
-  section: PropTypes.object
+  section: PropTypes.object,
+  setSectionName: PropTypes.func
 }
 
 export default EditSectionForm;
