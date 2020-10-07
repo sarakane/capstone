@@ -14,7 +14,8 @@ class ProjectControl extends React.Component {
       formVisibleOnPage: false,
       editing: false,
       selectedLibrary: null,
-      selectedSection: null
+      selectedSection: null,
+      selectedResource: null
     };
   }
 
@@ -87,6 +88,21 @@ class ProjectControl extends React.Component {
     this.setState({ selectedSection: null });
   }
 
+  handleChangingSelectedResource = (id) => {
+    this.props.firestore.get({collection: 'resources', doc: id}).then((resource) => {
+      const firestoreResource = {
+        resourceName: resource.get("resourceName"),
+        url: resource.get("url"),
+        sectionId: resource.get("sectionId"),
+        creatorId: resource.get("creatorId"),
+        id: resource.id
+      }
+      this.setState({
+        selectedResource: firestoreResource
+      });
+    })
+  }
+
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
@@ -95,7 +111,8 @@ class ProjectControl extends React.Component {
       buttonText = "Return to Ticket List";
     } else if (this.state.selectedSection != null){
       currentlyVisibleState = <SectionDetails section={this.state.selectedSection} 
-                                onClickingDelete={this.handleDeletingSection} 
+                                onClickingDelete={this.handleDeletingSection}
+                                whenResourceClicked={this.handleChangingSelectedResource} 
                                 />
       buttonText = "Return";
     } else if (this.state.selectedLibrary != null) {

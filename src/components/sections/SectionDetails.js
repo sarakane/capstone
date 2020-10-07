@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import EditSectionForm from './EditSectionForm';
+import ResourceList from '../resources/ResourceList';
 
 const editButtonStyle = {
   marginRight: '5px'
 };
 
 
-function SectionDetail(props) {
-  const { section, onClickingDelete} = props;
+function SectionDetails(props) {
+  const { section, onClickingDelete, whenResourceClicked} = props;
   const [editing, setEditing] = useState(false);
   const [sectionName, setSectionName] = useState(section.sectionName);
 
@@ -26,16 +27,18 @@ function SectionDetail(props) {
       <button onClick={() => onClickingDelete(section.id)} className="btn cyan accent-4">Delete</button>
       <hr />
       <h3>Resources</h3>
-      {/* <button onClick={}>{addingSection ? "Cancel": "New Section"}</button> */}
+      <ResourceList sectionId={section.id} whenResourceClicked={whenResourceClicked} />
+      <button  className="btn pink lighten-2">New Resource</button>
       <hr />
     </React.Fragment>
   );
 }
 
-SectionDetail.propTypes = {
+SectionDetails.propTypes = {
   section: PropTypes.object,
   onClickingDelete: PropTypes.func,
-  onClickingEdit: PropTypes.func
+  whenResourceClicked: PropTypes.func
+
 };
 
-export default SectionDetail;
+export default SectionDetails;

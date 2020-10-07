@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.library-list:hover, .section-list:hover {
+.library-list:hover, .section-list:hover, .resource-list:hover {
   color: #f06292
 }
 

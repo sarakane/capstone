@@ -7,8 +7,7 @@ const editButtonStyle = {
   marginRight: '5px'
 };
 
-function LibraryDetail(props) {
-  const { library, onClickingDelete, onClickingEdit, whenSectionClicked } = props;
+function LibraryDetail({ library, onClickingDelete, onClickingEdit, whenSectionClicked }) {
   const [addingSection, setAddingSection] = useState(false);
 
   const toggleNewSectionForm = () => {
@@ -34,7 +33,8 @@ function LibraryDetail(props) {
 LibraryDetail.propTypes = {
   library: PropTypes.object,
   onClickingDelete: PropTypes.func,
-  onClickingEdit: PropTypes.func
+  onClickingEdit: PropTypes.func,
+  whenSectionClicked: PropTypes.func
 };
 
 export default LibraryDetail;
