@@ -1,12 +1,14 @@
 import React from 'react';
-import Header from './components/Header';
+import Navigation from './components/Navigation';
 import LibraryControl from './components/LibraryControl';
 
 function App() {
   return (
     <React.Fragment>
-      <Header />
-      <LibraryControl />
+      <Navigation />
+      <div className="container">
+        <LibraryControl />
+      </div>
     </React.Fragment>
   );
 }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
-
 function LibraryList(props) {
 
   useFirestoreConnect([
@@ -15,11 +14,12 @@ function LibraryList(props) {
   if(isLoaded(libraries)) {
     return (
       <React.Fragment>
+        <h1>Library List</h1>
         <hr/>
         {libraries.map((library) => {
           return (
-            <div onClick = {() => props.whenLibraryClicked(library.id)}>
-              <h2>{library.libraryName}</h2>
+            <div onClick={() => props.whenLibraryClicked(library.id)}>
+              <h3>{library.libraryName}</h3>
               <hr/>
             </div>
             
@@ -30,7 +30,20 @@ function LibraryList(props) {
   } else {
     return (
       <React.Fragment>
-        <h3>Loading...</h3>
+        <h1>Library List</h1>
+        <hr/> 
+        <div class="preloader-wrapper small active">
+          <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+        <hr/>
       </React.Fragment>
     )
   }

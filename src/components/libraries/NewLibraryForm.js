@@ -26,7 +26,7 @@ function NewLibraryForm(props) {
           name='libraryName'
           placeholder='New Library' 
           required />
-        <button type='submit'>Create</button>
+        <button type='submit' className="btn pink lighten-2">Create</button>
       </form>
     </React.Fragment>
   )

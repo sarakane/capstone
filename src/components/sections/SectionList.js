@@ -37,7 +37,17 @@ function SectionList({libraryId, whenSectionClicked}) {
   } else {
     return (
       <React.Fragment>
-        <h3>Loading...</h3>
+        <div class="preloader-wrapper small active">
+          <div class="spinner-layer spinner-green">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
       </React.Fragment>
     )
   }

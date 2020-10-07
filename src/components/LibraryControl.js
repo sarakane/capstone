@@ -107,7 +107,7 @@ class LibraryControl extends React.Component {
     return (
       <React.Fragment>
         {currentlyVisibleState}
-        <button onClick={this.handleClick}>{buttonText}</button>
+        <button onClick={this.handleClick} className="btn cyan accent-4">{buttonText}</button>
       </React.Fragment>
     );
   }
