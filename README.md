@@ -15,16 +15,16 @@ See [here](/Proposal.md) for capstone proposal.<br />
     <th>Feature</th>
   </tr>
   <tr>
+    <td>✔</td>
+    <td>Users are able to create a resource library, add sections to that library, and add a resource to that section with full CRUD functionality</td>
+  </tr>
+  <tr>
     <td></td>
     <td>User registration (database storage)</td>
   </tr>
   <tr>
     <td></td>
     <td>User login/logout (database authentication)</td>
-  </tr>
-  <tr>
-    <td>✔</td>
-    <td>Users are able to create a resource library, add sections to that library, and add a resource to that section with full CRUD functionality</td>
   </tr>
   <tr>
     <td></td>
@@ -80,7 +80,7 @@ See [here](/Proposal.md) for capstone proposal.<br />
 ### 🎨 Mockups & Diagrams
 <details>
   <summary>Diagrams</summary>
-  <img src="./readme-images/capstone-website-flowchart.png" alt="Flowchart" />
+  <img src="./readme-images/resourcey.png" alt="Component Diagram" />
 </details>
 
 ## ⚙ Setup/Intstallation
