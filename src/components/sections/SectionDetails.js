@@ -8,8 +8,7 @@ const editButtonStyle = {
 };
 
 
-function SectionDetails(props) {
-  const { section, onClickingDelete, whenResourceClicked} = props;
+function SectionDetails({ section, onClickingDelete, whenResourceClicked, onClickingNewResource}) {
   const [editing, setEditing] = useState(false);
   const [sectionName, setSectionName] = useState(section.sectionName);
 
@@ -28,7 +27,7 @@ function SectionDetails(props) {
       <hr />
       <h3>Resources</h3>
       <ResourceList sectionId={section.id} whenResourceClicked={whenResourceClicked} />
-      <button  className="btn pink lighten-2">New Resource</button>
+      <button onClick={onClickingNewResource} className="btn pink lighten-2">New Resource</button>
       <hr />
     </React.Fragment>
   );
@@ -37,8 +36,8 @@ function SectionDetails(props) {
 SectionDetails.propTypes = {
   section: PropTypes.object,
   onClickingDelete: PropTypes.func,
-  whenResourceClicked: PropTypes.func
-
+  whenResourceClicked: PropTypes.func,
+  oonClickingNewResource: PropTypes.func
 };
 
 export default SectionDetails;

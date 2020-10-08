@@ -7,6 +7,7 @@ import LibraryList from './libraries/LibraryList';
 import LibraryDetail from './libraries/LibraryDetail';
 import SectionDetails from './sections/SectionDetails';
 import ResourceDetails from './resources/ResourceDetails';
+import NewResourceForm from './resources/NewResourceForm';
 
 class ProjectControl extends React.Component {
   constructor(props) {
@@ -16,25 +17,38 @@ class ProjectControl extends React.Component {
       editingLibrary: false,
       selectedLibrary: null,
       selectedSection: null,
-      selectedResource: null
+      selectedResource: null,
+      newResourceFormVisible: false
     };
   }
 
   handleClick = () =>{
-    if(this.state.selectedSection != null) {
+    if (this.state.newResourceFormVisible) {
+        this.setState(prevState => ({
+          newResourceFormVisible: !prevState.newResourceFormVisible,
+          editingLibrary: false,
+          selectedResource: null,
+          formVisibleOnPage: false
+      }));
+    } else if(this.state.selectedResource != null) {
       this.setState({
-        selectedSection: null,
+        selectedResource: null,
         editingLibrary: false
       });
+    } else if(this.state.selectedSection != null) {
+        this.setState({
+          selectedSection: null,
+          editingLibrary: false
+        });
     } else if (this.state.selectedLibrary != null) {
-      this.setState({
-        selectedLibrary: null,
-        editingLibrary: false
-      });
+        this.setState({
+          selectedLibrary: null,
+          editingLibrary: false
+        });
     } else {
-      this.setState(prevState => ({
-          formVisibleOnPage: !prevState.formVisibleOnPage
-      }));}
+        this.setState(prevState => ({
+            formVisibleOnPage: !prevState.formVisibleOnPage
+        }));}
   }
 
   handleAddingNewLibraryToList = () => {
@@ -105,12 +119,22 @@ class ProjectControl extends React.Component {
     })
   }
 
+  toggleNewResourceForm = () => {
+    this.setState(prevState => ({
+      newResourceFormVisible: !prevState.newResourceFormVisible
+    }));
+
+}
+
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    if(this.state.editingLibrary) {
+    if (this.state.newResourceFormVisible) {
+      currentlyVisibleState = <NewResourceForm sectionId={this.state.selectedSection.id} onNewResourceCreation={this.toggleNewResourceForm} />
+      buttonText ="Return to Section List";
+    } else if(this.state.editingLibrary) {
       currentlyVisibleState = <EditLibraryForm library={this.state.selectedLibrary} onEditLibrary={this.handleEditingLibrary} />
-      buttonText = "Return to Library List";
+      buttonText = "Return to Library List";    
     } else if (this.state.selectedResource != null) {
       currentlyVisibleState = <ResourceDetails resource={this.state.selectedResource}
                                 onClickingDelete={this.handleDeletingResource}
@@ -119,7 +143,8 @@ class ProjectControl extends React.Component {
     } else if (this.state.selectedSection != null){
       currentlyVisibleState = <SectionDetails section={this.state.selectedSection} 
                                 onClickingDelete={this.handleDeletingSection}
-                                whenResourceClicked={this.handleChangingSelectedResource} 
+                                whenResourceClicked={this.handleChangingSelectedResource}
+                                onClickingNewResource={this.toggleNewResourceForm} 
                                 />
       buttonText = "Return";
     } else if (this.state.selectedLibrary != null) {
