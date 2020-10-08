@@ -123,8 +123,12 @@ class ProjectControl extends React.Component {
     this.setState(prevState => ({
       newResourceFormVisible: !prevState.newResourceFormVisible
     }));
+  }
 
-}
+  handleDeletingResource = (id) => {
+        this.props.firestore.delete({ collection: 'resources', doc: id});
+        this.setState({ selectedResource: null });
+  }
 
   render() {
     let currentlyVisibleState = null;
