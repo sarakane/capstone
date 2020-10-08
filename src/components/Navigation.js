@@ -11,7 +11,7 @@ function Navigation(){
       <nav className="blue-grey">
         <div className="nav-wrapper">
           {/* eslint-disable-next-line */}
-          <a href="#" className="brand-logo" style={brandLogoStyle}>Resourcey</a>
+          <a href="/" className="brand-logo" style={brandLogoStyle}>Resourcey</a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             {/* eslint-disable-next-line */}
             <li><a href="/about">About</a></li>
