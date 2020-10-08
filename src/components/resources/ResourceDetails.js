@@ -12,8 +12,8 @@ function ResourceDetails({ resource, onClickingDelete, onClickingEdit} ) {
     <React.Fragment>
       <h1>Resource</h1>
       <h2>{resource.resourceName}</h2>
-      <button onClick={onClickingEdit} style={editButtonStyle} className="btn cyan accent-4">Edit</button>
-      <button onClick={() => onClickingDelete(resource.id)} className="btn cyan accent-4">Delete</button>
+      <button onClick={onClickingEdit} style={editButtonStyle} className="btn deep-purple darken-4">Edit</button>
+      <button onClick={() => onClickingDelete(resource.id)} className="btn deep-purple darken-4">Delete</button>
       <hr />
       <a href={resource.url}>{resource.url}</a>
       <p>{resource.description}</p>

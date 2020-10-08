@@ -22,12 +22,12 @@ function SectionDetails({ section, onClickingDelete, whenResourceClicked, onClic
       <h1>Section</h1>
       {editing && <EditSectionForm section={section} onEditSection={toggleEditSectionForm} setSectionName={setSectionName}/>}
       {!editing && <h2>{sectionName}</h2>}
-      <button onClick={toggleEditSectionForm} style={editButtonStyle} className="btn cyan accent-4">{!editing? "Edit": "Cancel"}</button>
-      <button onClick={() => onClickingDelete(section.id)} className="btn cyan accent-4">Delete</button>
+      <button onClick={toggleEditSectionForm} style={editButtonStyle} className="btn deep-purple darken-4">{!editing? "Edit": "Cancel"}</button>
+      <button onClick={() => onClickingDelete(section.id)} className="btn deep-purple darken-4">Delete</button>
       <hr />
       <h3>Resources</h3>
       <ResourceList sectionId={section.id} whenResourceClicked={whenResourceClicked} />
-      <button onClick={onClickingNewResource} className="btn pink lighten-2">New Resource</button>
+      <button onClick={onClickingNewResource} className="btn blue-grey lighten-1">New Resource</button>
       <hr />
     </React.Fragment>
   );

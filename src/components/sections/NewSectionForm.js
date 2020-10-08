@@ -31,7 +31,7 @@ function NewSectionForm({onNewSectionCreation, libraryId}) {
           name='sectionName'
           placeholder='New Section' 
           required />
-        <button type='submit' className="btn pink lighten-2" style={createButtonStyle}>Create</button>
+        <button type='submit' className="btn blue-grey lighten-1" style={createButtonStyle}>Create</button>
       </form>
     </React.Fragment>
   )

@@ -34,7 +34,7 @@ function NewLibraryForm(props) {
               required />
             </div>
           </div>
-        <button type='submit' className="btn pink lighten-2" style={addMargin}>Create</button>
+        <button type='submit' className="btn blue-grey lighten-1" style={addMargin}>Create</button>
       </form>
     </React.Fragment>
   )

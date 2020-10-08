@@ -48,7 +48,7 @@ function EditResourceForm(props) {
           name='description'
           defaultValue={resource.description}
           required />
-        <button type='submit' className='btn pink lighten-2' style={editButtonStyle}>Edit</button>
+        <button type='submit' className='btn blue-grey lighten-1' style={editButtonStyle}>Edit</button>
       </form>
     </React.Fragment>
   )

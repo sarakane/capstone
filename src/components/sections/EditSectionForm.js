@@ -28,7 +28,7 @@ function EditSectionForm({section, onEditSection, setSectionName}) {
           name='sectionName'
           defaultValue={section.sectionName} 
           required />
-        <button type='submit' className="btn pink lighten-2" style={createButtonStyle}>Submit</button>
+        <button type='submit' className="btn blue-grey lighten-1" style={createButtonStyle}>Submit</button>
       </form>
     </React.Fragment>
   )
