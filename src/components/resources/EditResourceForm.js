@@ -12,9 +12,20 @@ function EditResourceForm(props) {
 
   function handleEditResourceFormSubmission(event) {
     event.preventDefault();
-    props.onEditResource();
+
+    const editedResource = {
+      resourceName: event.target.resourceName.value,
+      url: event.target.url.value,
+      description: event.target.description.value,
+      creatorId: resource.creatorId,
+      sectionId: resource.sectionId
+    }
+
+    props.onEditResource(editedResource);
     const propertiesToUpdate = {
-      resourceName: event.target.resourceName.value
+      resourceName: event.target.resourceName.value,
+      url: event.target.url.value,
+      description: event.target.description.value
     }
     return firestore.update({collection: 'resources', doc: resource.id}, propertiesToUpdate);
   }
@@ -27,6 +38,16 @@ function EditResourceForm(props) {
           name='resourceName'
           defaultValue={resource.resourceName}
           required />
+        <input
+          type='text'
+          name='url'
+          defaultValue={resource.url}
+          required />
+        <input
+          type='text'
+          name='description'
+          defaultValue={resource.description}
+          required />
         <button type='submit' className='btn pink lighten-2' style={editButtonStyle}>Edit</button>
       </form>
     </React.Fragment>
@@ -34,7 +55,8 @@ function EditResourceForm(props) {
 }
 
 EditResourceForm.propTypes = {
-  onNewResourceCreation: PropTypes.func
+  onEditResource: PropTypes.func,
+  resource: PropTypes.object
 }
 
 export default EditResourceForm;

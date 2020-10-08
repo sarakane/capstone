@@ -8,6 +8,7 @@ import LibraryDetail from './libraries/LibraryDetail';
 import SectionDetails from './sections/SectionDetails';
 import ResourceDetails from './resources/ResourceDetails';
 import NewResourceForm from './resources/NewResourceForm';
+import EditResourceForm from './resources/EditResourceForm';
 
 class ProjectControl extends React.Component {
   constructor(props) {
@@ -18,16 +19,23 @@ class ProjectControl extends React.Component {
       selectedLibrary: null,
       selectedSection: null,
       selectedResource: null,
-      newResourceFormVisible: false
+      newResourceFormVisible: false,
+      editingResource: false
     };
   }
 
   handleClick = () =>{
-    if (this.state.newResourceFormVisible) {
+    if(this.state.editingResource) {
+      this.setState(prevState => ({
+        editingResource: !prevState.editingResource,
+        editingLibrary: false,
+        formVisibleOnPage: false,
+        newResourceFormVisible: false
+      }))
+    } else if (this.state.newResourceFormVisible) {
         this.setState(prevState => ({
           newResourceFormVisible: !prevState.newResourceFormVisible,
           editingLibrary: false,
-          selectedResource: null,
           formVisibleOnPage: false
       }));
     } else if(this.state.selectedResource != null) {
@@ -125,15 +133,33 @@ class ProjectControl extends React.Component {
     }));
   }
 
+  toggleEditResourceForm = () => {
+    this.setState(prevState => ({
+      editingResource: !prevState.editingResource
+    }));
+  }
+
   handleDeletingResource = (id) => {
         this.props.firestore.delete({ collection: 'resources', doc: id});
         this.setState({ selectedResource: null });
   }
 
+  handleEditingResource = (editedResource) => {
+    this.setState({
+      editingResource: false,
+      selectedResource: editedResource
+    });
+  }
+
+
+
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    if (this.state.newResourceFormVisible) {
+    if(this.state.editingResource) {
+      currentlyVisibleState = <EditResourceForm resource={this.state.selectedResource} onEditResource={this.handleEditingResource} />
+      buttonText = "Return to Resource";
+    } else if (this.state.newResourceFormVisible) {
       currentlyVisibleState = <NewResourceForm sectionId={this.state.selectedSection.id} onNewResourceCreation={this.toggleNewResourceForm} />
       buttonText ="Return to Section List";
     } else if(this.state.editingLibrary) {
@@ -142,7 +168,7 @@ class ProjectControl extends React.Component {
     } else if (this.state.selectedResource != null) {
       currentlyVisibleState = <ResourceDetails resource={this.state.selectedResource}
                                 onClickingDelete={this.handleDeletingResource}
-                                onClickingEdit={this.handleEditingResource} />
+                                onClickingEdit={this.toggleEditResourceForm} />
       buttonText = "Return to Section"
     } else if (this.state.selectedSection != null){
       currentlyVisibleState = <SectionDetails section={this.state.selectedSection} 

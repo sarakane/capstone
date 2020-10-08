@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 
+const listStyle = {
+  marginLeft: '20px',
+  cursor: 'pointer',
+}
 
 function SectionList({libraryId, whenSectionClicked}) {
   useFirestoreConnect([
@@ -25,7 +29,7 @@ function SectionList({libraryId, whenSectionClicked}) {
           {displaySections.map((section) => {
             return (
               <div onClick={() => whenSectionClicked(section.id)} key={section.id}>
-                <h4 className="section-list">{section.sectionName}</h4>
+                <h4 className="section-list" style={listStyle}>{section.sectionName}</h4>
                 <hr/>
               </div>
               

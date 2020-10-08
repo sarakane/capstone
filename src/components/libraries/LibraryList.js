@@ -6,9 +6,6 @@ import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 const listStyle = {
   marginLeft: '20px',
   cursor: 'pointer',
-  hover: {
-    color: 'blue'
-  }  
 }
 
 function LibraryList(props) {
