@@ -1,5 +1,5 @@
 # _Resourcey_
-#### _Capstone project for Epicodus, Initialized: 2020.09.25, Last Updated: 2020.10.07_
+#### _Capstone project for Epicodus, Initialized: 2020.09.25, Last Updated: 2020.10.11_
 #### By _**Sara Kane**_
 
 ## Description
