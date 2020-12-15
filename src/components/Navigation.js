@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import * as route from '../constants/routes';
 
 const brandLogoStyle = {
   fontFamily: 'Just Me Again Down Here, cursive',
@@ -7,22 +9,18 @@ const brandLogoStyle = {
 
 function Navigation(){
   return (
-    <React.Fragment>      
+    <>      
       <nav className="blue-grey">
         <div className="nav-wrapper">
-          {/* eslint-disable-next-line */}
-          <a href="/" className="brand-logo" style={brandLogoStyle}>Resourcey</a>
+          <Link to={route.LANDING} className="brand-logo" style={brandLogoStyle}>Resourcey</Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
-            {/* eslint-disable-next-line */}
-            <li><a href="/about">About</a></li>
-            {/* eslint-disable-next-line */}
-            <li><a href="/signin">Sign In</a></li>
-            {/* eslint-disable-next-line */}
-            <li><a href="/signup">Sign Up</a></li>
+            <li><Link to={route.ABOUT}>About</Link></li>
+            <li><Link to={route.SIGN_IN}>Sign In</Link></li>
+            <li><Link to={route.SIGN_UP}>Sign Up</Link></li>
           </ul>
         </div>
       </nav> 
-    </React.Fragment>
+    </>
   );
 }
 
