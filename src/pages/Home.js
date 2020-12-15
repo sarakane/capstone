@@ -1,7 +1,12 @@
 import React from "react";
+import ProjectControl from "../components/ProjectControl";
 
 const Home = () => {
-  return <div><h2>Home</h2></div>;
+  return (
+    <>
+      <ProjectControl />
+    </>
+  );
 };
 
 export default Home;

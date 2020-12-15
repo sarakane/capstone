@@ -15,6 +15,7 @@ function Navigation(){
           <Link to={route.LANDING} className="brand-logo" style={brandLogoStyle}>Resourcey</Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li><Link to={route.ABOUT}>About</Link></li>
+            <li><Link to={route.HOME}>Home</Link></li>
             <li><Link to={route.SIGN_IN}>Sign In</Link></li>
             <li><Link to={route.SIGN_UP}>Sign Up</Link></li>
           </ul>
