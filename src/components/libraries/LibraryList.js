@@ -23,8 +23,9 @@ function LibraryList({ history }) {
 
   if (isLoaded(libraries)) {
     return (
-      <React.Fragment>
-        <h1>Library List</h1>
+      <>
+        <h1 style={{display: 'inline-block'}}>Library List</h1>
+        <button onClick={() => history.push('/create-library')} className="btn blue-grey lighten-1" style={{marginLeft: '20px', verticalAlign: 'super'}}>New Library</button>
         <hr />
         {libraries.map((library) => {
           return (
@@ -39,11 +40,11 @@ function LibraryList({ history }) {
             </div>
           );
         })}
-      </React.Fragment>
+      </>
     );
   } else {
     return (
-      <React.Fragment>
+      <>
         <h1>Library List</h1>
         <hr />
         <div className='preloader-wrapper small active'>
@@ -60,7 +61,7 @@ function LibraryList({ history }) {
           </div>
         </div>
         <hr />
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -2,24 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 
-const addMargin = {
-  marginBottom: '5px'
-}
-
-function NewLibraryForm(props) {
+function NewLibraryForm({history}) {
   const firestore = useFirestore();
 
   function addLibraryToFirestore(event) {
     event.preventDefault();
 
-    props.onNewLibraryCreation();
-
-    return firestore.collection('libraries').add(
+    firestore.collection('libraries').add(
       {
         libraryName: event.target.libraryName.value,
         creatorId: "user1"
       }
     );
+
+    return history.push('/home')
   }
 
   return (
@@ -34,7 +30,8 @@ function NewLibraryForm(props) {
               required />
             </div>
           </div>
-        <button type='submit' className="btn blue-grey lighten-1" style={addMargin}>Create</button>
+        <button type='submit' className="btn blue-grey lighten-1" style={{marginRight: '5px'}}>Create</button>
+        <button type='button' className="btn blue-grey lighten-1" onClick={() => history.push('/home')}>Cancel</button>
       </form>
     </React.Fragment>
   )

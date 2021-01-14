@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import ForgotPassword from './pages/ForgotPassword';
 import LibraryDetail from './components/libraries/LibraryDetail';
+import NewLibraryForm from './components/libraries/NewLibraryForm';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path={route.SIGN_UP} component={SignUp} />
         <Route path={route.ACCOUNT} component={Account} />
         <Route path={route.LIBRARY_PAGE} component={LibraryDetail} />
+        <Route path={route.CREATE_LIBRARY} component={NewLibraryForm} />
       </div>
     </Router>
   );
