@@ -8,6 +8,7 @@ import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import ForgotPassword from './pages/ForgotPassword';
+import LibraryDetail from "./components/libraries/LibraryDetail";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path={route.SIGN_IN} component={SignIn} />
           <Route path={route.SIGN_UP} component={SignUp} />
           <Route path={route.ACCOUNT} component={Account} />
+          <Route path={route.LIBRARY_PAGE} component={LibraryDetail} />
         </Switch>
       </div>
     </Router>

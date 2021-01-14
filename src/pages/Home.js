@@ -1,10 +1,11 @@
-import React from "react";
-import ProjectControl from "../components/ProjectControl";
+import React from 'react';
+import LibraryList from '../components/libraries/LibraryList';
+import ProjectControl from '../components/ProjectControl';
 
-const Home = () => {
+const Home = ({ history }) => {
   return (
     <>
-      <ProjectControl />
+      <LibraryList history={history} />
     </>
   );
 };

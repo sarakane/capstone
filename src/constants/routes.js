@@ -5,3 +5,4 @@ export const HOME = '/home';
 export const ACCOUNT = '/account';
 export const ABOUT = '/about';
 export const FORGOT_PASSWORD = '/forgot-password';
+export const LIBRARY_PAGE = '/library/:id'
