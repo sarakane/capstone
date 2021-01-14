@@ -20,7 +20,7 @@ function NewResourceForm(props) {
         url: event.target.url.value,
         description: event.target.description.value,
         sectionId: props.sectionId,
-        creatorId: "apple1"
+        creatorId: "user1"
       }
     );
   }

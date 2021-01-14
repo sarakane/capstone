@@ -20,185 +20,230 @@ class ProjectControl extends React.Component {
       selectedSection: null,
       selectedResource: null,
       newResourceFormVisible: false,
-      editingResource: false
+      editingResource: false,
     };
   }
 
-  handleClick = () =>{
-    if(this.state.editingResource) {
-      this.setState(prevState => ({
+  handleClick = () => {
+    if (this.state.editingResource) {
+      this.setState((prevState) => ({
         editingResource: !prevState.editingResource,
         editingLibrary: false,
         formVisibleOnPage: false,
-        newResourceFormVisible: false
-      }))
-    } else if (this.state.newResourceFormVisible) {
-        this.setState(prevState => ({
-          newResourceFormVisible: !prevState.newResourceFormVisible,
-          editingLibrary: false,
-          formVisibleOnPage: false
+        newResourceFormVisible: false,
       }));
-    } else if(this.state.selectedResource != null) {
+    } else if (this.state.newResourceFormVisible) {
+      this.setState((prevState) => ({
+        newResourceFormVisible: !prevState.newResourceFormVisible,
+        editingLibrary: false,
+        formVisibleOnPage: false,
+      }));
+    } else if (this.state.selectedResource != null) {
       this.setState({
         selectedResource: null,
-        editingLibrary: false
+        editingLibrary: false,
       });
-    } else if(this.state.selectedSection != null) {
-        this.setState({
-          selectedSection: null,
-          editingLibrary: false
-        });
+    } else if (this.state.selectedSection != null) {
+      this.setState({
+        selectedSection: null,
+        editingLibrary: false,
+      });
     } else if (this.state.selectedLibrary != null) {
-        this.setState({
-          selectedLibrary: null,
-          editingLibrary: false
-        });
+      this.setState({
+        selectedLibrary: null,
+        editingLibrary: false,
+      });
     } else {
-        this.setState(prevState => ({
-            formVisibleOnPage: !prevState.formVisibleOnPage
-        }));}
-  }
+      this.setState((prevState) => ({
+        formVisibleOnPage: !prevState.formVisibleOnPage,
+      }));
+    }
+  };
 
   handleAddingNewLibraryToList = () => {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage
-      }));
-  }
-  
+    this.setState((prevState) => ({
+      formVisibleOnPage: !prevState.formVisibleOnPage,
+    }));
+  };
+
   handleChangingSelectedLibrary = (id) => {
-    this.props.firestore.get({collection: 'libraries', doc: id}).then((library) => {
-      const firestoreLibrary = {
-        libraryName: library.get("libraryName"),
-        creatorId: library.get("creatorId"),
-        id: library.id
-      }
-      this.setState({selectedLibrary: firestoreLibrary });
-    })
-  }
+    this.props.firestore
+      .get({ collection: 'libraries', doc: id })
+      .then((library) => {
+        const firestoreLibrary = {
+          libraryName: library.get('libraryName'),
+          creatorId: library.get('creatorId'),
+          id: library.id,
+        };
+        this.setState({ selectedLibrary: firestoreLibrary });
+      });
+  };
 
   handleChangingSelectedSection = (id) => {
-    this.props.firestore.get({collection: 'sections', doc: id}).then((section) => {
-      const firestoreSection = {
-        sectionName: section.get("sectionName"),
-        libraryId: section.get("libraryId"),
-        creatorId: section.get("creatorId"),
-        id: section.id
-      }
-      this.setState({
-        selectedSection: firestoreSection
+    this.props.firestore
+      .get({ collection: 'sections', doc: id })
+      .then((section) => {
+        const firestoreSection = {
+          sectionName: section.get('sectionName'),
+          libraryId: section.get('libraryId'),
+          creatorId: section.get('creatorId'),
+          id: section.id,
+        };
+        this.setState({
+          selectedSection: firestoreSection,
+        });
       });
-    })
-  }
+  };
 
   handleDeletingLibrary = (id) => {
     this.props.firestore.delete({ collection: 'libraries', doc: id });
     this.setState({ selectedLibrary: null });
-  }
+  };
 
   handleEditClick = () => {
-    this.setState({editingLibrary: true});
-  }
+    this.setState({ editingLibrary: true });
+  };
 
   handleEditingLibrary = () => {
     this.setState({
       editingLibrary: false,
-      selectedLibrary: null
+      selectedLibrary: null,
     });
-  } 
+  };
 
-  handleDeletingSection = (id) => {
+  handleDeletingSection = async (id) => {
+    let resources = await this.props.firestore.get({
+      collection: 'resources',
+      where: [['sectionId', '==', 'id']],
+    }).then((resources) => {
+      console.log(resources.get());
+    });
+    console.log(resources);
     this.props.firestore.delete({ collection: 'sections', doc: id });
     this.setState({ selectedSection: null });
-  }
+  };
 
   handleChangingSelectedResource = (id) => {
-    this.props.firestore.get({collection: 'resources', doc: id}).then((resource) => {
-      const firestoreResource = {
-        resourceName: resource.get("resourceName"),
-        url: resource.get("url"),
-        description: resource.get("description"),
-        sectionId: resource.get("sectionId"),
-        creatorId: resource.get("creatorId"),
-        id: resource.id
-      }
-      this.setState({
-        selectedResource: firestoreResource
+    this.props.firestore
+      .get({ collection: 'resources', doc: id })
+      .then((resource) => {
+        const firestoreResource = {
+          resourceName: resource.get('resourceName'),
+          url: resource.get('url'),
+          description: resource.get('description'),
+          sectionId: resource.get('sectionId'),
+          creatorId: resource.get('creatorId'),
+          id: resource.id,
+        };
+        this.setState({
+          selectedResource: firestoreResource,
+        });
       });
-    })
-  }
+  };
 
   toggleNewResourceForm = () => {
-    this.setState(prevState => ({
-      newResourceFormVisible: !prevState.newResourceFormVisible
+    this.setState((prevState) => ({
+      newResourceFormVisible: !prevState.newResourceFormVisible,
     }));
-  }
+  };
 
   toggleEditResourceForm = () => {
-    this.setState(prevState => ({
-      editingResource: !prevState.editingResource
+    this.setState((prevState) => ({
+      editingResource: !prevState.editingResource,
     }));
-  }
+  };
 
   handleDeletingResource = (id) => {
-        this.props.firestore.delete({ collection: 'resources', doc: id});
-        this.setState({ selectedResource: null });
-  }
+    this.props.firestore.delete({ collection: 'resources', doc: id });
+    this.setState({ selectedResource: null });
+  };
 
   handleEditingResource = (editedResource) => {
     this.setState({
       editingResource: false,
-      selectedResource: editedResource
+      selectedResource: editedResource,
     });
-  }
-
-
+  };
 
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    if(this.state.editingResource) {
-      currentlyVisibleState = <EditResourceForm resource={this.state.selectedResource} onEditResource={this.handleEditingResource} />
-      buttonText = "Return to Resource";
+    if (this.state.editingResource) {
+      currentlyVisibleState = (
+        <EditResourceForm
+          resource={this.state.selectedResource}
+          onEditResource={this.handleEditingResource}
+        />
+      );
+      buttonText = 'Return to Resource';
     } else if (this.state.newResourceFormVisible) {
-      currentlyVisibleState = <NewResourceForm sectionId={this.state.selectedSection.id} onNewResourceCreation={this.toggleNewResourceForm} />
-      buttonText ="Return to Section List";
-    } else if(this.state.editingLibrary) {
-      currentlyVisibleState = <EditLibraryForm library={this.state.selectedLibrary} onEditLibrary={this.handleEditingLibrary} />
-      buttonText = "Return to Library List";    
+      currentlyVisibleState = (
+        <NewResourceForm
+          sectionId={this.state.selectedSection.id}
+          onNewResourceCreation={this.toggleNewResourceForm}
+        />
+      );
+      buttonText = 'Return to Section List';
+    } else if (this.state.editingLibrary) {
+      currentlyVisibleState = (
+        <EditLibraryForm
+          library={this.state.selectedLibrary}
+          onEditLibrary={this.handleEditingLibrary}
+        />
+      );
+      buttonText = 'Return to Library List';
     } else if (this.state.selectedResource != null) {
-      currentlyVisibleState = <ResourceDetails resource={this.state.selectedResource}
-                                onClickingDelete={this.handleDeletingResource}
-                                onClickingEdit={this.toggleEditResourceForm} />
-      buttonText = "Return to Section"
-    } else if (this.state.selectedSection != null){
-      currentlyVisibleState = <SectionDetails section={this.state.selectedSection} 
-                                onClickingDelete={this.handleDeletingSection}
-                                whenResourceClicked={this.handleChangingSelectedResource}
-                                onClickingNewResource={this.toggleNewResourceForm} 
-                                />
-      buttonText = "Return";
+      currentlyVisibleState = (
+        <ResourceDetails
+          resource={this.state.selectedResource}
+          onClickingDelete={this.handleDeletingResource}
+          onClickingEdit={this.toggleEditResourceForm}
+        />
+      );
+      buttonText = 'Return to Section';
+    } else if (this.state.selectedSection != null) {
+      currentlyVisibleState = (
+        <SectionDetails
+          section={this.state.selectedSection}
+          onClickingDelete={this.handleDeletingSection}
+          whenResourceClicked={this.handleChangingSelectedResource}
+          onClickingNewResource={this.toggleNewResourceForm}
+        />
+      );
+      buttonText = 'Return';
     } else if (this.state.selectedLibrary != null) {
-      currentlyVisibleState = <LibraryDetail library={this.state.selectedLibrary} 
-                                onClickingDelete={this.handleDeletingLibrary}  
-                                onClickingEdit={this.handleEditClick}
-                                whenSectionClicked={this.handleChangingSelectedSection}/>
-      buttonText = "Return to Library List";
+      currentlyVisibleState = (
+        <LibraryDetail
+          library={this.state.selectedLibrary}
+          onClickingDelete={this.handleDeletingLibrary}
+          onClickingEdit={this.handleEditClick}
+          whenSectionClicked={this.handleChangingSelectedSection}
+        />
+      );
+      buttonText = 'Return to Library List';
     } else if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewLibraryForm onNewLibraryCreation={this.handleAddingNewLibraryToList} />
-      buttonText = "Return to Library List";
+      currentlyVisibleState = (
+        <NewLibraryForm
+          onNewLibraryCreation={this.handleAddingNewLibraryToList}
+        />
+      );
+      buttonText = 'Return to Library List';
     } else {
-      currentlyVisibleState = <LibraryList whenLibraryClicked={this.handleChangingSelectedLibrary}/>;
-      buttonText = "Add Library";
+      currentlyVisibleState = (
+        <LibraryList whenLibraryClicked={this.handleChangingSelectedLibrary} />
+      );
+      buttonText = 'Add Library';
     }
     return (
       <React.Fragment>
         {currentlyVisibleState}
-        <button onClick={this.handleClick} className="btn deep-purple darken-4">{buttonText}</button>
+        <button onClick={this.handleClick} className='btn deep-purple darken-4'>
+          {buttonText}
+        </button>
       </React.Fragment>
     );
   }
 }
-
 
 ProjectControl = connect()(ProjectControl);
 

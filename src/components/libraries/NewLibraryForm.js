@@ -17,7 +17,7 @@ function NewLibraryForm(props) {
     return firestore.collection('libraries').add(
       {
         libraryName: event.target.libraryName.value,
-        creatorId: "apple1"
+        creatorId: "user1"
       }
     );
   }

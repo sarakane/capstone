@@ -17,7 +17,7 @@ function NewSectionForm({onNewSectionCreation, libraryId}) {
     return firestore.collection('sections').add(
       {
         sectionName: event.target.sectionName.value,
-        creatorId: "apple1",
+        creatorId: "user1",
         libraryId
       }
     );
