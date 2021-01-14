@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import * as route from './constants/routes';
 import Navigation from "./components/Navigation";
-import About from './pages/About';
 import Account from './pages/Account';
 import Home from './pages/Home';
 import Landing from './pages/Landing';
@@ -17,13 +16,12 @@ function App() {
       <Navigation />
       <div className="container">
         <Switch>
-          <Route exact path={route.LANDING}><Landing /></Route>
-          <Route path={route.HOME}><Home /></Route>
-          <Route path={route.ABOUT}><About /></Route> 
-          <Route path={route.FORGOT_PASSWORD}><ForgotPassword /></Route>
-          <Route path={route.ACCOUNT}><Account/></Route>
-          <Route path={route.SIGN_IN}><SignIn /></Route>
-          <Route path={route.SIGN_UP}><SignUp /></Route>
+          <Route exact path={route.LANDING} component={Landing} />
+          <Route path={route.HOME} component={Home} />
+          <Route path={route.FORGOT_PASSWORD} component={ForgotPassword} />
+          <Route path={route.SIGN_IN} component={SignIn} />
+          <Route path={route.SIGN_UP} component={SignUp} />
+          <Route path={route.ACCOUNT} component={Account} />
         </Switch>
       </div>
     </Router>
