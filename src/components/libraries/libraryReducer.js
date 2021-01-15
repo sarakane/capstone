@@ -1,4 +1,18 @@
-import { SELECT_LIBRARY, UNSELECT_LIBRARY } from './libraryConstants';
+const SELECT_LIBRARY = 'SELECT_LIBRARY';
+const UNSELECT_LIBRARY = 'UNSELECT_LIBRARY'; 
+
+export function selectLibrary(payload) {
+  return {
+    type: SELECT_LIBRARY,
+    payload
+  }
+}
+
+export function unselectLibrary() {
+  return  {
+    type: UNSELECT_LIBRARY
+  }
+}
 
 const initialState = {
   selectedLibrary: null,

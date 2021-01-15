@@ -8,13 +8,12 @@ import {
   useFirestore,
   useFirestoreConnect,
 } from 'react-redux-firebase';
-import { selectLibrary } from './libraryActions';
+import { selectLibrary } from './libraryReducer';
 
 function LibraryDetail({ match, history }) {
   const [addingSection, setAddingSection] = useState(false);
   const firestore = useFirestore();
   const dispatch = useDispatch();
-  dispatch(selectLibrary(match.params.id));
 
   useFirestoreConnect([{ collection: 'libraries', doc: match.params.id }]);
   const library = useSelector(
@@ -26,6 +25,10 @@ function LibraryDetail({ match, history }) {
   function deleteLibrary(libraryId) {
     firestore.delete({ collection: 'libraries', doc: libraryId });
     return history.push('/home');
+  }
+
+  if(!useSelector(state => state.library.selectedLibrary)) {
+    dispatch(selectLibrary(library));
   }
 
   if (isLoaded(library)) {

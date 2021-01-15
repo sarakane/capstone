@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { Link, useHistory } from 'react-router-dom';
 
 const listStyle = {
   marginLeft: '20px',
@@ -9,6 +10,7 @@ const listStyle = {
 }
 
 function SectionList({libraryId}) {
+  const history = useHistory();
   useFirestoreConnect([
     { collection: 'sections',  where: [['libraryId', '==', libraryId]]},
   ]);
@@ -28,11 +30,10 @@ function SectionList({libraryId}) {
           <hr/>
           {sections.map((section) => {
             return (
-              <div onClick={() => console.log('clicked!')} key={section.id}>
+              <div onClick={() => history.push(`/library/${libraryId}/section/${section.id}`)} key={section.id}>
                 <h4 className="section-list" style={listStyle}>{section.sectionName}</h4>
                 <hr/>
-              </div>
-              
+              </div>              
             )
           })}
         </>

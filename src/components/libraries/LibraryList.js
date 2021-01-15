@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { selectLibrary, unselectLibrary } from './libraryActions';
+import { selectLibrary, unselectLibrary } from './libraryReducer';
 
 const listStyle = {
   marginLeft: '20px',

@@ -11,6 +11,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import LibraryDetail from './components/libraries/LibraryDetail';
 import NewLibraryForm from './components/libraries/NewLibraryForm';
 import EditLibraryForm from './components/libraries/EditLibraryForm';
+import SectionDetails from './components/sections/SectionDetails';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path={route.SIGN_UP} component={SignUp} />
         <Route path={route.ACCOUNT} component={Account} />
         <Route exact path={route.EDIT_LIBRARY} component={EditLibraryForm} />
+        <Route exact path={route.SECTION_PAGE} component={SectionDetails} />
         <Route exact path={route.LIBRARY_PAGE} component={LibraryDetail} />
         <Route exact path={route.CREATE_LIBRARY} component={NewLibraryForm} />
       </div>
