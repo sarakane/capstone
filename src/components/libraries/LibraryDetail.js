@@ -8,7 +8,7 @@ import {
   useFirestore,
   useFirestoreConnect,
 } from 'react-redux-firebase';
-import { selectLibrary } from './libraryReducer';
+import { selectLibrary } from '../../reducers/libraryReducer';
 
 function LibraryDetail({ match, history }) {
   const [addingSection, setAddingSection] = useState(false);

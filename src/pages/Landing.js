@@ -9,7 +9,7 @@ const Landing = () => {
     <div style={fancyFont}>
       <h1>Welcome to Resourcey!</h1>
       <p style={{fontSize: "30px"}}>Share your learning resources with your classmates</p>
-      <img src='/assets/books-computer.jpg' width='75%' height='75%' />
+      <img src='/assets/books-computer.jpg' width='75%' height='75%' alt='Various electronic devices with pictures of books on their screens' />
     </div>
   );
 };

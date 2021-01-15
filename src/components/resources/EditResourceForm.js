@@ -2,35 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 
-const editButtonStyle = {
-  marginBottom: '5px'
-}
-
-function EditResourceForm(props) {
+function EditResourceForm({resource, setEditingResource, libraryId}) {
   const firestore = useFirestore();
-  const { resource } = props;
 
   function handleEditResourceFormSubmission(event) {
     event.preventDefault();
-
-    const editedResource = {
-      resourceName: event.target.resourceName.value,
-      url: event.target.url.value,
-      description: event.target.description.value,
-      creatorId: resource.creatorId,
-      sectionId: resource.sectionId
-    }
 
     const propertiesToUpdate = {
       resourceName: event.target.resourceName.value,
       url: event.target.url.value,
       description: event.target.description.value
     }
-    return firestore.update({collection: 'resources', doc: resource.id}, propertiesToUpdate);
+
+    setEditingResource(state => !state);
+
+    return firestore.update({collection: 'libraries', doc: libraryId, subcollections: [{collection: 'resources', doc: resource.id}]}, propertiesToUpdate);
   }
 
   return (
-    <React.Fragment>
+    <>
       <form onSubmit={handleEditResourceFormSubmission}>
         <input
           type='text'
@@ -47,14 +37,17 @@ function EditResourceForm(props) {
           name='description'
           defaultValue={resource.description}
           required />
-        <button type='submit' className='btn blue-grey lighten-1' style={editButtonStyle}>Edit</button>
+        <button type='submit' className='btn blue-grey lighten-1' style={{marginRight: '5px'}}>Edit</button>
+        <button type='button' className='btn blue-grey lighten-1' onClick={() => setEditingResource(state => !state)}>Cancel</button>
       </form>
-    </React.Fragment>
+    </>
   )
 }
 
 EditResourceForm.propTypes = {
-  resource: PropTypes.object
+  resource: PropTypes.object,
+  setEditingResource: PropTypes.func,
+  libraryId: PropTypes.string
 }
 
 export default EditResourceForm;
