@@ -13,8 +13,10 @@ import NewLibraryForm from './components/libraries/NewLibraryForm';
 import EditLibraryForm from './components/libraries/EditLibraryForm';
 import SectionDetails from './components/sections/SectionDetails';
 import ResourceDetails from './components/resources/ResourceDetails';
+import { useFirebase } from 'react-redux-firebase';
 
 function App() {
+  const firebase = useFirebase();
   return (
     <Router>
       <Navigation />
@@ -24,6 +26,7 @@ function App() {
         <Route path={route.FORGOT_PASSWORD} component={ForgotPassword} />
         <Route path={route.SIGN_IN} component={SignIn} />
         <Route path={route.SIGN_UP} component={SignUp} />
+        <Route path={route.SIGN_OUT} render={(props) => {firebase.logout(); props.history.push('/');}} />
         <Route path={route.ACCOUNT} component={Account} />
         <Route exact path={route.EDIT_LIBRARY} component={EditLibraryForm} />
         <Route exact path={route.RESOURCE_PAGE} component={ResourceDetails} />
