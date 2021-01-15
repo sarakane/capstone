@@ -210,6 +210,8 @@ Found a bug or want to add a feature? [Open a new issue here](https://github.com
 * [VS Code](https://code.visualstudio.com/)
 * [Git](https://git-scm.com/)
 
+## Acknowledgments
+Image of books on various devices by <a href="https://pixabay.com/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3659791">Gerd Altmann</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3659791">Pixabay</a>
 
 ## 🔑 License
 *This site is licensed under the MIT license.*
