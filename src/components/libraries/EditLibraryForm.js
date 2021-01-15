@@ -1,36 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useFirestore } from 'react-redux-firebase';
+import { isLoaded, useFirestore, useFirestoreConnect } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
 
-const editButtonStyle = {
-  marginBottom: '5px'
-}
-
-function EditLibraryForm(props) {
+function EditLibraryForm({match, history}) {
   const firestore = useFirestore();
-  const { library } = props;
+
+  useFirestoreConnect([{ collection: 'libraries', doc: match.params.id }]);
+  const library = useSelector(
+    ({ firestore: { data } }) =>
+      data.libraries && data.libraries[match.params.id]
+  );
 
   function handleEditLibraryFormSubmission(event) {
     event.preventDefault();
-    props.onEditLibrary();
     const propertiesToUpdate = {
       libraryName: event.target.libraryName.value
     }
-    return firestore.update({collection: 'libraries', doc: library.id}, propertiesToUpdate);
+    firestore.update({collection: 'libraries', doc: match.params.id}, propertiesToUpdate);
+    return history.push(`/library/${match.params.id}`);
   }
 
-  return (
-    <React.Fragment>
-      <form onSubmit={handleEditLibraryFormSubmission}>
-        <input
-          type='text'
-          name='libraryName'
-          defaultValue={library.libraryName}
-          required />
-        <button type='submit' className='btn blue-grey lighten-1' style={editButtonStyle}>Edit</button>
-      </form>
-    </React.Fragment>
-  )
+  if(isLoaded(library)) {
+    return (
+      <React.Fragment>
+        <h2>Edit Library</h2>
+        <form onSubmit={handleEditLibraryFormSubmission}>
+          <input
+            type='text'
+            name='libraryName'
+            defaultValue={library.libraryName}
+            required />
+          <button type='submit' className='btn blue-grey lighten-1'>Edit</button>
+          <button type='button' className='btn blue-grey lighten-1' style={{marginLeft: '5px'}} onClick={() => history.push(`/library/${match.params.id}`)}>Cancel</button>
+        </form>
+      </React.Fragment>
+    )
+  } else {
+    return <></>
+  }
+
 }
 
 EditLibraryForm.propTypes = {
