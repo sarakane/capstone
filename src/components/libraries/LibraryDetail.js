@@ -15,7 +15,7 @@ function LibraryDetail({ match, history }) {
   const firestore = useFirestore();
   const dispatch = useDispatch();
 
-  useFirestoreConnect([{ collection: 'libraries', doc: match.params.id }]);
+  useFirestoreConnect([{ collection: 'libraries', doc: match.params.id }, {collection: 'libraries', doc: match.params.id, subcollections: [{collection: 'resources'}], storeAs: 'resources'}]);
   const library = useSelector(
     (state) =>
       state.firestore.ordered.libraries &&
@@ -23,9 +23,11 @@ function LibraryDetail({ match, history }) {
   );
 
   const sectionsForLibrary = useSelector(state => state.firestore.ordered.sections);
+  const resourcesForLibrary = useSelector(state => state.firestore.ordered.resources);
 
   function deleteLibrary(libraryId) {
     sectionsForLibrary.forEach(section => firestore.delete({ collection: 'libraries',  doc: libraryId, subcollections: [{collection: 'sections', doc: section.id}]}));
+    resourcesForLibrary.forEach(resource => firestore.delete({ collection: 'libraries',  doc: libraryId, subcollections: [{collection: 'resources', doc: resource.id}]}));
     firestore.delete({ collection: 'libraries', doc: libraryId });
     return history.push('/home');
   }
