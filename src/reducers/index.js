@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { firestoreReducer } from 'redux-firestore';
-import libraryReducer from '../components/libraries/libraryReducer';
+import libraryReducer from './libraryReducer';
 
 const rootReducer = combineReducers({
   firestore: firestoreReducer,
