@@ -2,25 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 
-const createButtonStyle = {
-  marginBottom: '5px'
-}
-
-function NewSectionForm({onNewSectionCreation, libraryId}) {
+function NewSectionForm({setAddingSection, libraryId}) {
   const firestore = useFirestore();
 
   function addSectionToFirestore(event) {
     event.preventDefault();
-
-    onNewSectionCreation();
-
-    return firestore.collection('sections').add(
+    
+    firestore.collection('sections').add(
       {
         sectionName: event.target.sectionName.value,
         creatorId: "user1",
         libraryId
       }
     );
+
+    return setAddingSection(state => !state);
   }
 
   return (
@@ -31,14 +27,15 @@ function NewSectionForm({onNewSectionCreation, libraryId}) {
           name='sectionName'
           placeholder='New Section' 
           required />
-        <button type='submit' className="btn blue-grey lighten-1" style={createButtonStyle}>Create</button>
+        <button type='submit' className="btn blue-grey lighten-1" style={{marginRight:'5px'}}>Create</button>
+        <button type='button' className="btn blue-grey lighten-1" onClick={() => setAddingSection(state => !state)}>Cancel</button>
       </form>
     </React.Fragment>
   )
 }
 
 NewSectionForm.propTypes = {
-  onNewSectionCreation: PropTypes.func,
+  setAddingSection: PropTypes.func,
   libraryId: PropTypes.string
 }
 

@@ -10,24 +10,23 @@ const listStyle = {
 
 function SectionList({libraryId}) {
   useFirestoreConnect([
-    { collection: 'sections' }
+    { collection: 'sections',  where: [['libraryId', '==', libraryId]]},
   ]);
 
   const sections = useSelector(state => state.firestore.ordered.sections);
 
   if(isLoaded(sections)) {
-    const displaySections = sections.filter(section => section.libraryId === libraryId);
-    if (displaySections.length === 0) {
+    if (sections.length === 0) {
       return (
-        <React.Fragment>
+        <>
           <p>This library doesn't have any sections.</p>
-        </React.Fragment>
+        </>
       )
     } else {
       return (
-        <React.Fragment>
+        <>
           <hr/>
-          {displaySections.map((section) => {
+          {sections.map((section) => {
             return (
               <div onClick={() => console.log('clicked!')} key={section.id}>
                 <h4 className="section-list" style={listStyle}>{section.sectionName}</h4>
@@ -36,7 +35,7 @@ function SectionList({libraryId}) {
               
             )
           })}
-        </React.Fragment>
+        </>
       )
     }
   } else {

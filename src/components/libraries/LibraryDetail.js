@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import SectionList from '../sections/SectionList';
 import NewSectionForm from '../sections/NewSectionForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { isLoaded, useFirestore, useFirestoreConnect } from 'react-redux-firebase';
+import {
+  isLoaded,
+  useFirestore,
+  useFirestoreConnect,
+} from 'react-redux-firebase';
 import { selectLibrary } from './libraryActions';
 
 function LibraryDetail({ match, history }) {
@@ -15,7 +19,8 @@ function LibraryDetail({ match, history }) {
   useFirestoreConnect([{ collection: 'libraries', doc: match.params.id }]);
   const library = useSelector(
     (state) =>
-      state.firestore.ordered.libraries && state.firestore.ordered.libraries.find(e => e.id === match.params.id)
+      state.firestore.ordered.libraries &&
+      state.firestore.ordered.libraries.find((e) => e.id === match.params.id)
   );
 
   function deleteLibrary(libraryId) {
@@ -25,13 +30,13 @@ function LibraryDetail({ match, history }) {
 
   if (isLoaded(library)) {
     return (
-      <React.Fragment>
+      <>
         <h1>Library</h1>
         <h2>{library.libraryName}</h2>
         <button
           onClick={() => history.push(`/library/${library.id}/edit`)}
           className='btn deep-purple darken-4'
-          style={{marginRight: '5px'}}
+          style={{ marginRight: '5px' }}
         >
           Edit
         </button>
@@ -42,24 +47,26 @@ function LibraryDetail({ match, history }) {
           Delete
         </button>
         <hr />
-        <h3>Sections</h3>
-        <SectionList
-          libraryId={library.id}
-        />
-        {/* {addingSection && (
+        <h3 style={{ display: 'inline-block', marginRight: '20px' }}>
+          Sections
+        </h3>
+        {!addingSection && (
+          <button
+            onClick={() => setAddingSection((state) => !state)}
+            className='btn blue-grey lighten-1'
+            style={{ verticalAlign: 'super' }}
+          >
+            New Section
+          </button>
+        )}
+        {addingSection && (
           <NewSectionForm
-            onNewSectionCreation={toggleNewSectionForm}
+            setAddingSection={setAddingSection}
             libraryId={library.id}
           />
-        )} */}
-        <button
-          onClick={() => setAddingSection(state => !state)}
-          className='btn blue-grey lighten-1'
-        >
-          {addingSection ? 'Cancel' : 'New Section'}
-        </button>
-        <hr />
-      </React.Fragment>
+        )}
+        <SectionList libraryId={library.id} />
+      </>
     );
   } else {
     return <div></div>;
