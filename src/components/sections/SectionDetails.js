@@ -14,7 +14,6 @@ const editButtonStyle = {
 function SectionDetails({ match }) {
   const [editing, setEditing] = useState(false);
   const dispatch = useDispatch();
-  // const [sectionName, setSectionName] = useState(section.sectionName);
   const fireStore = useFirestore();
 
   // if(!useSelector(state => state.library.selectedLibrary)) {
@@ -22,7 +21,7 @@ function SectionDetails({ match }) {
   // }
 
   useFirestoreConnect([
-    { collection: 'sections',  doc: match.params.id2}
+    { collection: 'libraries',  doc: match.params.id, subcollections: [{collection: 'sections', doc: match.params.id2}], storeAs: 'sections'},
   ]);
   
 
@@ -30,16 +29,16 @@ function SectionDetails({ match }) {
     setEditing(!editing);
   }
 
-  const section = useSelector(state => state.firestore.ordered.sections);
+  const section = useSelector(state => state.firestore.ordered.sections && state.firestore.ordered.sections.find(e => e.id === match.params.id2));
 
   if(isLoaded(section)) {
     return (
       <>
         <h1>Section</h1>
-        {/* {editing && <EditSectionForm section={section} onEditSection={toggleEditSectionForm} setSectionName={setSectionName}/>}
-        {!editing && <h2>{sectionName}</h2>}
+        {editing && <EditSectionForm section={section} setEditing={setEditing} />}
+        {!editing && <h2>{section.sectionName}</h2>}
         <button onClick={toggleEditSectionForm} style={editButtonStyle} className="btn deep-purple darken-4">{!editing? "Edit": "Cancel"}</button>
-        <button onClick={() => onClickingDelete(section.id)} className="btn deep-purple darken-4">Delete</button> */}
+        <button onClick={() => console.log('clicked')} className="btn deep-purple darken-4">Delete</button>
         <hr />
         <h3>Resources</h3>
         {/* <ResourceList sectionId={section.id} whenResourceClicked={whenResourceClicked} />
