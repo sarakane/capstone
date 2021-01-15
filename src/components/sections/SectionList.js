@@ -8,12 +8,13 @@ const listStyle = {
   cursor: 'pointer',
 }
 
-function SectionList({libraryId, whenSectionClicked}) {
+function SectionList({libraryId}) {
   useFirestoreConnect([
     { collection: 'sections' }
   ]);
 
   const sections = useSelector(state => state.firestore.ordered.sections);
+
   if(isLoaded(sections)) {
     const displaySections = sections.filter(section => section.libraryId === libraryId);
     if (displaySections.length === 0) {
@@ -28,7 +29,7 @@ function SectionList({libraryId, whenSectionClicked}) {
           <hr/>
           {displaySections.map((section) => {
             return (
-              <div onClick={() => whenSectionClicked(section.id)} key={section.id}>
+              <div onClick={() => console.log('clicked!')} key={section.id}>
                 <h4 className="section-list" style={listStyle}>{section.sectionName}</h4>
                 <hr/>
               </div>
@@ -60,8 +61,7 @@ function SectionList({libraryId, whenSectionClicked}) {
 }
 
 SectionList.propTypes = {
-  libraryId: PropTypes.string,
-  whenSectionClicked: PropTypes.func
+  libraryId: PropTypes.string
 }
 
 export default SectionList;
