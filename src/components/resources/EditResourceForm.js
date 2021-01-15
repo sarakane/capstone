@@ -21,7 +21,6 @@ function EditResourceForm(props) {
       sectionId: resource.sectionId
     }
 
-    props.onEditResource(editedResource);
     const propertiesToUpdate = {
       resourceName: event.target.resourceName.value,
       url: event.target.url.value,
@@ -55,7 +54,6 @@ function EditResourceForm(props) {
 }
 
 EditResourceForm.propTypes = {
-  onEditResource: PropTypes.func,
   resource: PropTypes.object
 }
 

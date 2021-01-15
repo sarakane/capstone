@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { useParams } from 'react-router-dom';
 
 const listStyle = {
   marginLeft: '20px',
   cursor: 'pointer',
 }
 
-function ResourceList({sectionId, whenResourceClicked}) {
+function ResourceList({sectionId}) {
+  let { id } = useParams();
   useFirestoreConnect([
-    { collection: 'resources' }
+    { collection: 'libraries', doc: id, subcollections: [{collection: 'resources', where: ['sectionId', '==', sectionId]}],  storeAs: 'resources' }
   ]);
 
   const resources = useSelector(state => state.firestore.ordered.resources);
@@ -28,7 +30,7 @@ function ResourceList({sectionId, whenResourceClicked}) {
           <hr/>
           {displayResources.map((resource) => {
             return (
-              <div onClick={() => whenResourceClicked(resource.id)} key={resource.id}>
+              <div onClick={() => console.log('resource clicked')} key={resource.id}>
                 <h4 className="resource-list" style={listStyle}>{resource.resourceName}</h4>
                 <hr/>
               </div>
@@ -60,8 +62,7 @@ function ResourceList({sectionId, whenResourceClicked}) {
 }
 
 ResourceList.propTypes = {
-  sectionId: PropTypes.string,
-  whenResourceClicked: PropTypes.func
+  sectionId: PropTypes.string
 }
 
 export default ResourceList;

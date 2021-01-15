@@ -1,34 +1,20 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import EditSectionForm from './EditSectionForm';
 import ResourceList from '../resources/ResourceList';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectLibrary } from '../libraries/libraryReducer';
 import { isLoaded, useFirestore, useFirestoreConnect } from 'react-redux-firebase';
-
-const editButtonStyle = {
-  marginRight: '5px'
-};
-
+import NewResourceForm from '../resources/NewResourceForm';
 
 function SectionDetails({ match }) {
   const [editing, setEditing] = useState(false);
+  const [creatingNewResource, setCreatingNewResource] = useState(false);
   const dispatch = useDispatch();
   const fireStore = useFirestore();
-
-  // if(!useSelector(state => state.library.selectedLibrary)) {
-  //   dispatch(selectLibrary(match.params.id));
-  // }
 
   useFirestoreConnect([
     { collection: 'libraries',  doc: match.params.id, subcollections: [{collection: 'sections', doc: match.params.id2}], storeAs: 'sections'},
   ]);
   
-
-  const toggleEditSectionForm = () => {
-    setEditing(!editing);
-  }
-
   const section = useSelector(state => state.firestore.ordered.sections && state.firestore.ordered.sections.find(e => e.id === match.params.id2));
 
   if(isLoaded(section)) {
@@ -37,13 +23,13 @@ function SectionDetails({ match }) {
         <h1>Section</h1>
         {editing && <EditSectionForm section={section} setEditing={setEditing} />}
         {!editing && <h2>{section.sectionName}</h2>}
-        <button onClick={toggleEditSectionForm} style={editButtonStyle} className="btn deep-purple darken-4">{!editing? "Edit": "Cancel"}</button>
-        <button onClick={() => console.log('clicked')} className="btn deep-purple darken-4">Delete</button>
+        <button onClick={() => setEditing(state => !state)} style={{marginRight: '5px'}} className="btn deep-purple darken-4">{!editing? "Edit": "Cancel"}</button>
+        <button onClick={() => console.log('clicked delete section')} className="btn deep-purple darken-4">Delete</button>
         <hr />
         <h3>Resources</h3>
-        {/* <ResourceList sectionId={section.id} whenResourceClicked={whenResourceClicked} />
-        <button onClick={onClickingNewResource} className="btn blue-grey lighten-1">New Resource</button>
-        <hr /> */}
+        <ResourceList sectionId={section.id} />
+        {!creatingNewResource && <button onClick={() => setCreatingNewResource(state => !state)} className="btn blue-grey lighten-1">New Resource</button>}
+        {creatingNewResource && <NewResourceForm sectionId={section.id} setCreatingNewResource={setCreatingNewResource} />}
       </>
     );
   } else {
@@ -65,7 +51,6 @@ function SectionDetails({ match }) {
       </>
     )
   }
-
 }
 
 export default SectionDetails;

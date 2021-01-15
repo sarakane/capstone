@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 import { useParams } from 'react-router-dom';
 
-const createButtonStyle = {
-  marginBottom: '5px',
-};
-
-function EditSectionForm({ section, setEditing, match }) {
+function EditSectionForm({ section, setEditing }) {
   const firestore = useFirestore();
-  let {id, id2} = useParams();
+  let { id, id2 } = useParams();
 
   function handleEditSectionFormSubmission(event) {
     event.preventDefault();
@@ -17,9 +13,13 @@ function EditSectionForm({ section, setEditing, match }) {
       sectionName: event.target.sectionName.value,
     };
 
-    setEditing(state => !state)
+    setEditing((state) => !state);
     return firestore.update(
-      { collection: 'libraries',  doc: id, subcollections: [{collection: 'sections', doc: id2}]},
+      {
+        collection: 'libraries',
+        doc: id,
+        subcollections: [{ collection: 'sections', doc: id2 }],
+      },
       propertiesToUpdate
     );
   }
@@ -36,19 +36,18 @@ function EditSectionForm({ section, setEditing, match }) {
         <button
           type='submit'
           className='btn blue-grey lighten-1'
-          style={createButtonStyle}
+          style={{ marginBottom: '5px' }}
         >
           Submit
         </button>
       </form>
     </>
-  )
+  );
 }
 
 EditSectionForm.propTypes = {
-  onEditSection: PropTypes.func,
   section: PropTypes.object,
-  setSectionName: PropTypes.func,
+  setEditing: PropTypes.func,
 };
 
 export default EditSectionForm;

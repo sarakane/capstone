@@ -32,7 +32,7 @@ function SectionList({libraryId}) {
             return (
               <div onClick={() => history.push(`/library/${libraryId}/section/${section.id}`)} key={section.id}>
                 <h4 className="section-list" style={listStyle}>{section.sectionName}</h4>
-                <hr/>
+                <hr />
               </div>              
             )
           })}
