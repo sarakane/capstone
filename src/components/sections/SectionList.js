@@ -12,7 +12,7 @@ const listStyle = {
 function SectionList({libraryId}) {
   const history = useHistory();
   useFirestoreConnect([
-    { collection: 'sections',  where: [['libraryId', '==', libraryId]]},
+    { collection: 'libraries',  doc: libraryId, subcollections: [{collection: 'sections'}], storeAs: 'sections'},
   ]);
 
   const sections = useSelector(state => state.firestore.ordered.sections);

@@ -22,7 +22,10 @@ function LibraryDetail({ match, history }) {
       state.firestore.ordered.libraries.find((e) => e.id === match.params.id)
   );
 
+  const sectionsForLibrary = useSelector(state => state.firestore.ordered.sections);
+
   function deleteLibrary(libraryId) {
+    sectionsForLibrary.forEach(section => firestore.delete({ collection: 'libraries',  doc: libraryId, subcollections: [{collection: 'sections', doc: section.id}]}));
     firestore.delete({ collection: 'libraries', doc: libraryId });
     return history.push('/home');
   }
