@@ -9,30 +9,59 @@ import {
   useFirestoreConnect,
 } from 'react-redux-firebase';
 import { selectLibrary } from '../../reducers/libraryReducer';
+import { useHistory, useParams } from 'react-router-dom';
 
-function LibraryDetail({ match, history }) {
+function LibraryDetail() {
+  const history = useHistory();
+  const {id } = useParams();
   const [addingSection, setAddingSection] = useState(false);
   const firestore = useFirestore();
   const dispatch = useDispatch();
 
-  useFirestoreConnect([{ collection: 'libraries', doc: match.params.id }, {collection: 'libraries', doc: match.params.id, subcollections: [{collection: 'resources'}], storeAs: 'resources'}]);
+  useFirestoreConnect([
+    { collection: 'libraries', doc: id },
+    {
+      collection: 'libraries',
+      doc: id,
+      subcollections: [{ collection: 'resources' }],
+      storeAs: 'resources',
+    },
+  ]);
   const library = useSelector(
     (state) =>
       state.firestore.ordered.libraries &&
-      state.firestore.ordered.libraries.find((e) => e.id === match.params.id)
+      state.firestore.ordered.libraries.find((e) => e.id === id)
   );
 
-  const sectionsForLibrary = useSelector(state => state.firestore.ordered.sections);
-  const resourcesForLibrary = useSelector(state => state.firestore.ordered.resources);
+  const auth = useSelector((state) => state.firebase.auth);
+
+  const sectionsForLibrary = useSelector(
+    (state) => state.firestore.ordered.sections
+  );
+  const resourcesForLibrary = useSelector(
+    (state) => state.firestore.ordered.resources
+  );
 
   function deleteLibrary(libraryId) {
-    sectionsForLibrary.forEach(section => firestore.delete({ collection: 'libraries',  doc: libraryId, subcollections: [{collection: 'sections', doc: section.id}]}));
-    resourcesForLibrary.forEach(resource => firestore.delete({ collection: 'libraries',  doc: libraryId, subcollections: [{collection: 'resources', doc: resource.id}]}));
+    sectionsForLibrary.forEach((section) =>
+      firestore.delete({
+        collection: 'libraries',
+        doc: libraryId,
+        subcollections: [{ collection: 'sections', doc: section.id }],
+      })
+    );
+    resourcesForLibrary.forEach((resource) =>
+      firestore.delete({
+        collection: 'libraries',
+        doc: libraryId,
+        subcollections: [{ collection: 'resources', doc: resource.id }],
+      })
+    );
     firestore.delete({ collection: 'libraries', doc: libraryId });
     return history.push('/home');
   }
 
-  if(!useSelector(state => state.library.selectedLibrary)) {
+  if (!useSelector((state) => state.library.selectedLibrary)) {
     dispatch(selectLibrary(library));
   }
 
@@ -41,19 +70,24 @@ function LibraryDetail({ match, history }) {
       <>
         <h1>Library</h1>
         <h2>{library.libraryName}</h2>
-        <button
-          onClick={() => history.push(`/library/${library.id}/edit`)}
-          className='btn deep-purple darken-4'
-          style={{ marginRight: '5px' }}
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => deleteLibrary(match.params.id)}
-          className='btn deep-purple darken-4'
-        >
-          Delete
-        </button>
+        {(!auth.isEmpty && (auth.uid === library.creatorId)) && (
+          <>
+            <button
+              onClick={() => history.push(`/library/${library.id}/edit`)}
+              className='btn deep-purple darken-4'
+              style={{ marginRight: '5px' }}
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => deleteLibrary(id)}
+              className='btn deep-purple darken-4'
+            >
+              Delete
+            </button>
+            
+          </>
+        )}
         <hr />
         <h3 style={{ display: 'inline-block', marginRight: '20px' }}>
           Sections

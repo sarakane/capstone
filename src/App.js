@@ -14,6 +14,7 @@ import EditLibraryForm from './components/libraries/EditLibraryForm';
 import SectionDetails from './components/sections/SectionDetails';
 import ResourceDetails from './components/resources/ResourceDetails';
 import { useFirebase } from 'react-redux-firebase';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const firebase = useFirebase();
@@ -22,17 +23,17 @@ function App() {
       <Navigation />
       <div className='container'>
         <Route exact path={route.LANDING} component={Landing} />
-        <Route path={route.HOME} component={Home} />
+        <PrivateRoute path={route.HOME}><Home /></PrivateRoute>
         <Route path={route.FORGOT_PASSWORD} component={ForgotPassword} />
         <Route path={route.SIGN_IN} component={SignIn} />
         <Route path={route.SIGN_UP} component={SignUp} />
         <Route path={route.SIGN_OUT} render={(props) => {firebase.logout(); props.history.push('/');}} />
         <Route path={route.ACCOUNT} component={Account} />
-        <Route exact path={route.EDIT_LIBRARY} component={EditLibraryForm} />
-        <Route exact path={route.RESOURCE_PAGE} component={ResourceDetails} />
-        <Route exact path={route.SECTION_PAGE} component={SectionDetails} />
-        <Route exact path={route.LIBRARY_PAGE} component={LibraryDetail} />
-        <Route exact path={route.CREATE_LIBRARY} component={NewLibraryForm} />
+        <PrivateRoute exact path={route.EDIT_LIBRARY}><EditLibraryForm /></PrivateRoute>
+        <PrivateRoute exact path={route.RESOURCE_PAGE}><ResourceDetails /></PrivateRoute>
+        <PrivateRoute exact path={route.SECTION_PAGE}><SectionDetails /></PrivateRoute>
+        <PrivateRoute exact path={route.LIBRARY_PAGE}><LibraryDetail /></PrivateRoute>
+        <PrivateRoute exact path={route.CREATE_LIBRARY}><NewLibraryForm /></PrivateRoute>
       </div>
     </Router>
   );

@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { selectLibrary, unselectLibrary } from '../../reducers/libraryReducer';
+import { useHistory } from 'react-router-dom';
 
 const listStyle = {
   marginLeft: '20px',
   cursor: 'pointer',
 };
 
-function LibraryList({ history }) {
+function LibraryList() {
   const dispatch = useDispatch();
+  const history = useHistory();
   dispatch(unselectLibrary());
   useFirestoreConnect([{ collection: 'libraries' }]);
 

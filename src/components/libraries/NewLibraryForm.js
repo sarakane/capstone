@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
 
 function NewLibraryForm({history}) {
   const firestore = useFirestore();
+  const auth = useSelector(state => state.firebase.auth);
 
   function addLibraryToFirestore(event) {
     event.preventDefault();
@@ -11,7 +13,7 @@ function NewLibraryForm({history}) {
     firestore.collection('libraries').add(
       {
         libraryName: event.target.libraryName.value,
-        creatorId: "user1"
+        creatorId: auth.uid
       }
     );
 
