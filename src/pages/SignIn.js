@@ -16,25 +16,26 @@ const SignIn = ({ history }) => {
       history.push('/home')
     } catch(error) {
       console.log(error);
+      setLoading(false);
     }
-    setLoading(false);
+    
   }
   return (
     <>
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
-        <div class='input-field col s12'>
+        <div className='input-field col s12'>
           <input id='email' type='email' className='validate' />
-          <label for='email'>Email</label>
+          <label htmlFor='email'>Email</label>
         </div>
-        <div class='input-field col s12'>
+        <div className='input-field col s12'>
           <input id='password' type='password' className='validate' />
-          <label for='password'>Password</label>
+          <label htmlFor='password'>Password</label>
         </div>
 
         <button
           disabled={loading}
-          class='btn waves-effect waves-light'
+          className='btn waves-effect waves-light'
           type='submit'
           name='action'
         >

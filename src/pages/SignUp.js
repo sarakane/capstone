@@ -26,30 +26,31 @@ const SignUp = ({history}) => {
       history.push('/signin')
     } catch {
       setError('Failed to create an account');
+      setLoading(false);
     }
-    setLoading(false);
+    
   }
   return (
     <>
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         {error && <div className='card-panel red darken-4'>{error}</div>}
-        <div class='input-field col s12'>
+        <div className='input-field col s12'>
           <input id='email' ref={emailRef} type='email' className='validate' required/>
-          <label for='email'>Email</label>
+          <label htmlFor='email'>Email</label>
         </div>
-        <div class='input-field col s12'>
+        <div className='input-field col s12'>
           <input id='password' ref={passwordRef} type='password' className='validate' required/>
-          <label for='password'>Password</label>
+          <label htmlFor='password'>Password</label>
         </div>
-        <div class='input-field col s12'>
+        <div className='input-field col s12'>
           <input id='passwordConfirm' ref={passwordConfirmRef} type='password' className='validate' required/>
-          <label for='passwordConfirm'>Password</label>
+          <label htmlFor='passwordConfirm'>Password</label>
         </div>
 
         <button
           disabled={loading}
-          class='btn waves-effect waves-light'
+          className='btn waves-effect waves-light'
           type='submit'
           name='action'
         >
