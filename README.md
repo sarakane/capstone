@@ -70,7 +70,7 @@ See [here](/Proposal.md) for capstone proposal.<br />
     <td>Users can upvote resources they’ve found helpful</td>
   </tr>
   <tr>
-    <td></td>
+    <td>✔</td>
     <td>Website is hosted</td>
   </tr>
 </table>
