@@ -35,7 +35,7 @@ const SignIn = ({ history }) => {
 
         <button
           disabled={loading}
-          className='btn waves-effect waves-light'
+          className='btn waves-effect waves-light blue-grey lighten-1'
           type='submit'
           name='action'
         >

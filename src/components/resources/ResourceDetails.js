@@ -62,30 +62,38 @@ function ResourceDetails() {
     } else {
       return (
         <>
-          <a className="waves-effect waves-light btn-small" href={`/library/${id}/section/${id2}`}><i className="material-icons left">arrow_back</i>Section</a>
-          <h1>Resource</h1>
-          <h2>{resource.resourceName}</h2>
+          <a className="waves-effect waves-light btn-small blue-grey lighten-1" href={`/library/${id}/section/${id2}`}><i className="material-icons left">arrow_back</i>Section</a>
+          <div className="row">
+              <div className="col s12 m6">
+                <div className="card blue-grey darken-1">
+                  <div className="card-content white-text">
+                    <span className="card-title">{resource.resourceName}</span>
+                    <p>{resource.description}</p>
+                  </div>
+                  <div className="card-action">
+                    <a href={resource.url}>Link</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           {!auth.isEmpty && auth.uid === library.creatorId && (
             <>
               <button
                 onClick={() => setEditingResource((state) => !state)}
                 style={{ marginRight: '5px' }}
-                className='btn deep-purple darken-4'
+                className='btn blue-grey lighten-1'
               >
                 Edit
               </button>
               <button
                 onClick={() => handleDeletingResource(resource.id)}
-                className='btn deep-purple darken-4'
+                className='btn red darken-4'
               >
                 Delete
               </button>
             </>
           )}
-          <hr />
-          <a href={resource.url}>{resource.url}</a>
-          <p>{resource.description}</p>
-          <hr />
+
         </>
       );
     }

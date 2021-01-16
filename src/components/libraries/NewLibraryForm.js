@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-function NewLibraryForm({history}) {
+function NewLibraryForm() {
   const firestore = useFirestore();
+  const history = useHistory();
   const auth = useSelector(state => state.firebase.auth);
 
   function addLibraryToFirestore(event) {

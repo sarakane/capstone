@@ -6,8 +6,8 @@ import { selectLibrary, unselectLibrary } from '../../reducers/libraryReducer';
 import { useHistory } from 'react-router-dom';
 
 const listStyle = {
-  marginLeft: '20px',
   cursor: 'pointer',
+  fontSize: '24px'
 };
 
 function LibraryList() {
@@ -26,29 +26,38 @@ function LibraryList() {
   if (isLoaded(libraries)) {
     return (
       <>
-        <h1 style={{display: 'inline-block'}}>Library List</h1>
-        <button onClick={() => history.push('/create-library')} className="btn blue-grey lighten-1" style={{marginLeft: '20px', verticalAlign: 'super'}}>New Library</button>
-        <hr />
-        {libraries.map((library) => {
-          return (
-            <div
-              onClick={() => handleLibrarySelection(library)}
-              key={library.id}
+        <ul className='collection with-header'>
+          <li className='collection-header'>
+            <h1 style={{ display: 'inline-block' }}>Library List</h1>
+            <button
+              onClick={() => history.push('/create-library')}
+              className='btn blue-grey lighten-1'
+              style={{ marginLeft: '20px', verticalAlign: 'super' }}
             >
-              <h3 style={listStyle} className='library-list'>
+              New Library
+            </button>
+          </li>
+          {libraries.map((library) => {
+            return (
+              <li
+                className='collection-item library-list'
+                onClick={() => handleLibrarySelection(library)}
+                style={listStyle}
+                key={library.id}
+              >
                 {library.libraryName}
-              </h3>
-              <hr />
-            </div>
-          );
-        })}
+              </li>
+            );
+          })}
+        </ul>
       </>
     );
   } else {
     return (
       <>
-        <h1>Library List</h1>
-        <hr />
+        <ul className='collection with-header'>
+          <li className='collection-header'>
+        <h1>Library List</h1></li>
         <div className='preloader-wrapper small active'>
           <div className='spinner-layer spinner-green-only'>
             <div className='circle-clipper left'>
@@ -62,7 +71,7 @@ function LibraryList() {
             </div>
           </div>
         </div>
-        <hr />
+        </ul>
       </>
     );
   }

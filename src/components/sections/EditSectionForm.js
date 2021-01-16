@@ -36,9 +36,17 @@ function EditSectionForm({ section, setEditing }) {
         <button
           type='submit'
           className='btn blue-grey lighten-1'
-          style={{ marginBottom: '5px' }}
+          style={{ marginBottom: '5px', marginRight: '5px' }}
         >
           Submit
+        </button>
+        <button
+          type='button'
+          onClick={() => setEditing(state => !state)}
+          className='btn blue-grey lighten-1'
+          style={{ marginBottom: '5px' }}
+        >
+          Cancel
         </button>
       </form>
     </>

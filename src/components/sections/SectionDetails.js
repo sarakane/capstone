@@ -56,32 +56,43 @@ function SectionDetails() {
   if (isLoaded(section)) {
     return (
       <>
-        <a className="waves-effect waves-light btn-small" href={`/library/${id}`}><i className="material-icons left">arrow_back</i>Library</a>
-        <h1>Section</h1>
+        <a
+          className='waves-effect waves-light btn-small blue-grey lighten-1'
+          href={`/library/${id}`}
+        >
+          <i className='material-icons left'>arrow_back</i>Library
+        </a>
+        <h1>Section {!editing && <>/ {section.sectionName}</>}</h1>
         {!auth.isEmpty && auth.uid === section.creatorId && (
           <>
             {editing && (
               <EditSectionForm section={section} setEditing={setEditing} />
             )}
-            {!editing && <h2>{section.sectionName}</h2>}
-            <button
-              onClick={() => setEditing((state) => !state)}
-              style={{ marginRight: '5px' }}
-              className='btn deep-purple darken-4'
-            >
-              {!editing ? 'Edit' : 'Cancel'}
-            </button>
-            <button
-              onClick={() => handleDeletingSection(section.id)}
-              className='btn deep-purple darken-4'
-            >
-              Delete
-            </button>
+            {!editing && (
+              <>
+                <button
+                  onClick={() => setEditing((state) => !state)}
+                  style={{ marginRight: '5px' }}
+                  className='btn blue-grey lighten-1'
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeletingSection(section.id)}
+                  className='btn red darken-4'
+                >
+                  Delete
+                </button>
+              </>
+            )}
           </>
         )}
-        <hr />
-        <h3>Resources</h3>
-        <ResourceList sectionId={section.id} />
+        <ul className='collection with-header'>
+          <li className='collection-header'>
+            <h4>Resources</h4>
+          </li>
+          <ResourceList sectionId={section.id} />
+        </ul>
         {!creatingNewResource && (
           <button
             onClick={() => setCreatingNewResource((state) => !state)}

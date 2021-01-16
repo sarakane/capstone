@@ -4,11 +4,6 @@ import { useSelector } from 'react-redux';
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useHistory, useParams } from 'react-router-dom';
 
-const listStyle = {
-  marginLeft: '20px',
-  cursor: 'pointer',
-};
-
 function ResourceList({ sectionId }) {
   let { id } = useParams();
   const history = useHistory();
@@ -34,22 +29,21 @@ function ResourceList({ sectionId }) {
     } else {
       return (
         <>
-          <hr />
           {resources.map((resource) => {
             return (
-              <div
-                onClick={() =>
-                  history.push(
-                    `/library/${id}/section/${sectionId}/resource/${resource.id}`
-                  )
-                }
-                key={resource.id}
-              >
-                <h4 className='resource-list' style={listStyle}>
-                  {resource.resourceName}
-                </h4>
-                <hr />
-              </div>
+              <li className='collection-item' key={resource.id}>
+                <div
+                  onClick={() =>
+                    history.push(
+                      `/library/${id}/section/${sectionId}/resource/${resource.id}`
+                    )
+                  }
+                >
+                  <h5 className='resource-list' style={{ cursor: 'pointer' }}>
+                    {resource.resourceName}
+                  </h5>
+                </div>
+              </li>
             );
           })}
         </>

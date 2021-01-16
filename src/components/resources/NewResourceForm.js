@@ -37,7 +37,7 @@ function NewResourceForm({ sectionId, setCreatingNewResource }) {
           placeholder='Resource Name'
           required
         />
-        <input type='text' name='url' placeholder='URL' required />
+        <input type='url' name='url' placeholder='https://' pattern="(http|https)://.*" required />
         <input
           type='text'
           name='description'

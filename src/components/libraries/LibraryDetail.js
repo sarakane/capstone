@@ -68,45 +68,54 @@ function LibraryDetail() {
   if (isLoaded(library)) {
     return (
       <>
-        <h1>Library</h1>
-        <h2>{library.libraryName}</h2>
+        <a
+          className="waves-effect waves-light btn-small blue-grey lighten-1'"
+          href={`/home`}
+        >
+          <i className='material-icons left'>arrow_back</i>Library List
+        </a>
+        <h1>Library / {library.libraryName}</h1>
         {!auth.isEmpty && auth.uid === library.creatorId && (
           <>
             <button
               onClick={() => history.push(`/library/${library.id}/edit`)}
-              className='btn deep-purple darken-4'
+              className='btn blue-grey lighten-1'
               style={{ marginRight: '5px' }}
             >
               Edit
             </button>
             <button
               onClick={() => deleteLibrary(id)}
-              className='btn deep-purple darken-4'
+              className='btn red darken-4'
             >
               Delete
             </button>
           </>
         )}
         <hr />
-        <h3 style={{ display: 'inline-block', marginRight: '20px' }}>
-          Sections
-        </h3>
-        {!addingSection && !auth.isEmpty && auth.uid === library.creatorId && (
-          <button
-            onClick={() => setAddingSection((state) => !state)}
-            className='btn blue-grey lighten-1'
-            style={{ verticalAlign: 'super' }}
-          >
-            New Section
-          </button>
-        )}
-        {addingSection && (
-          <NewSectionForm
-            setAddingSection={setAddingSection}
-            libraryId={library.id}
-          />
-        )}
-        <SectionList libraryId={library.id} />
+        <ul className='collection with-header'>
+          <li className='collection-header'>
+            <h3 style={{ display: 'inline-block', marginRight: '20px' }}>
+              Sections
+            </h3>
+            {!addingSection && !auth.isEmpty && auth.uid === library.creatorId && (
+              <button
+                onClick={() => setAddingSection((state) => !state)}
+                className='btn blue-grey lighten-1'
+                style={{ verticalAlign: 'super' }}
+              >
+                New Section
+              </button>
+            )}
+          </li>
+          {addingSection && (
+            <NewSectionForm
+              setAddingSection={setAddingSection}
+              libraryId={library.id}
+            />
+          )}
+          <SectionList libraryId={library.id} />
+        </ul>
       </>
     );
   } else {
