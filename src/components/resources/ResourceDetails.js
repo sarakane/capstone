@@ -50,7 +50,7 @@ function ResourceDetails() {
     });
   }
 
-  if (isLoaded(resource)) {
+  if (isLoaded(resource) && isLoaded(library)) {
     if (editingResource) {
       return (
         <EditResourceForm
@@ -62,8 +62,8 @@ function ResourceDetails() {
     } else {
       return (
         <>
+          <a className="waves-effect waves-light btn-small" href={`/library/${id}/section/${id2}`}><i className="material-icons left">arrow_back</i>Section</a>
           <h1>Resource</h1>
-
           <h2>{resource.resourceName}</h2>
           {!auth.isEmpty && auth.uid === library.creatorId && (
             <>

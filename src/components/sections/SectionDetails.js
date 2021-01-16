@@ -56,7 +56,7 @@ function SectionDetails() {
   if (isLoaded(section)) {
     return (
       <>
-        <a class="waves-effect waves-light btn-small" href={`/library/${id}`}><i class="material-icons left">arrow_back</i>Library</a>
+        <a className="waves-effect waves-light btn-small" href={`/library/${id}`}><i className="material-icons left">arrow_back</i>Library</a>
         <h1>Section</h1>
         {!auth.isEmpty && auth.uid === section.creatorId && (
           <>
