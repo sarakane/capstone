@@ -13,7 +13,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 function LibraryDetail() {
   const history = useHistory();
-  const {id } = useParams();
+  const { id } = useParams();
   const [addingSection, setAddingSection] = useState(false);
   const firestore = useFirestore();
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ function LibraryDetail() {
       <>
         <h1>Library</h1>
         <h2>{library.libraryName}</h2>
-        {(!auth.isEmpty && (auth.uid === library.creatorId)) && (
+        {!auth.isEmpty && auth.uid === library.creatorId && (
           <>
             <button
               onClick={() => history.push(`/library/${library.id}/edit`)}
@@ -85,14 +85,13 @@ function LibraryDetail() {
             >
               Delete
             </button>
-            
           </>
         )}
         <hr />
         <h3 style={{ display: 'inline-block', marginRight: '20px' }}>
           Sections
         </h3>
-        {!addingSection && (
+        {!addingSection && !auth.isEmpty && auth.uid === library.creatorId && (
           <button
             onClick={() => setAddingSection((state) => !state)}
             className='btn blue-grey lighten-1'

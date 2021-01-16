@@ -8,17 +8,20 @@ import {
   useFirestoreConnect,
 } from 'react-redux-firebase';
 import NewResourceForm from '../resources/NewResourceForm';
+import { useHistory, useParams } from 'react-router-dom';
 
-function SectionDetails({ match, history }) {
+function SectionDetails() {
   const [editing, setEditing] = useState(false);
   const [creatingNewResource, setCreatingNewResource] = useState(false);
   const firestore = useFirestore();
+  const { id, id2 } = useParams();
+  const history = useHistory();
 
   useFirestoreConnect([
     {
       collection: 'libraries',
-      doc: match.params.id,
-      subcollections: [{ collection: 'sections', doc: match.params.id2 }],
+      doc: id,
+      subcollections: [{ collection: 'sections', doc: id2 }],
       storeAs: 'sections',
     },
   ]);
@@ -26,49 +29,56 @@ function SectionDetails({ match, history }) {
   const section = useSelector(
     (state) =>
       state.firestore.ordered.sections &&
-      state.firestore.ordered.sections.find((e) => e.id === match.params.id2)
+      state.firestore.ordered.sections.find((e) => e.id === id2)
   );
   const sectionResources = useSelector(
     (state) => state.firestore.ordered.resources
   );
 
+  const auth = useSelector((state) => state.firebase.auth);
+
   function handleDeletingSection(sectionId) {
     sectionResources.forEach((resource) =>
       firestore.delete({
         collection: 'libraries',
-        doc: match.params.id,
+        doc: id,
         subcollections: [{ collection: 'resources', doc: resource.id }],
       })
     );
     firestore.delete({
       collection: 'libraries',
-      doc: match.params.id,
+      doc: id,
       subcollections: [{ collection: 'sections', doc: sectionId }],
     });
-    history.push(`/library/${match.params.id}`);
+    history.push(`/library/${id}`);
   }
 
   if (isLoaded(section)) {
     return (
       <>
+        <a class="waves-effect waves-light btn-small" href={`/library/${id}`}><i class="material-icons left">arrow_back</i>Library</a>
         <h1>Section</h1>
-        {editing && (
-          <EditSectionForm section={section} setEditing={setEditing} />
+        {!auth.isEmpty && auth.uid === section.creatorId && (
+          <>
+            {editing && (
+              <EditSectionForm section={section} setEditing={setEditing} />
+            )}
+            {!editing && <h2>{section.sectionName}</h2>}
+            <button
+              onClick={() => setEditing((state) => !state)}
+              style={{ marginRight: '5px' }}
+              className='btn deep-purple darken-4'
+            >
+              {!editing ? 'Edit' : 'Cancel'}
+            </button>
+            <button
+              onClick={() => handleDeletingSection(section.id)}
+              className='btn deep-purple darken-4'
+            >
+              Delete
+            </button>
+          </>
         )}
-        {!editing && <h2>{section.sectionName}</h2>}
-        <button
-          onClick={() => setEditing((state) => !state)}
-          style={{ marginRight: '5px' }}
-          className='btn deep-purple darken-4'
-        >
-          {!editing ? 'Edit' : 'Cancel'}
-        </button>
-        <button
-          onClick={() => handleDeletingSection(section.id)}
-          className='btn deep-purple darken-4'
-        >
-          Delete
-        </button>
         <hr />
         <h3>Resources</h3>
         <ResourceList sectionId={section.id} />

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
 
 function NewSectionForm({ setAddingSection, libraryId }) {
   const firestore = useFirestore();
+  const auth = useSelector((state) => state.firebase.auth);
 
   function addSectionToFirestore(event) {
     event.preventDefault();
@@ -14,7 +16,7 @@ function NewSectionForm({ setAddingSection, libraryId }) {
       .collection('sections')
       .add({
         sectionName: event.target.sectionName.value,
-        creatorId: 'user1',
+        creatorId: auth.uid,
       });
 
     return setAddingSection((state) => !state);

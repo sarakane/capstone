@@ -1,33 +1,53 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { isLoaded, useFirestore, useFirestoreConnect } from 'react-redux-firebase';
+import {
+  isLoaded,
+  useFirestore,
+  useFirestoreConnect,
+} from 'react-redux-firebase';
+import { useHistory, useParams } from 'react-router-dom';
 import EditResourceForm from './EditResourceForm';
 
-function ResourceDetails({ match, history }) {
+function ResourceDetails() {
   const firestore = useFirestore();
+  const { id, id2, id3 } = useParams();
+  const history = useHistory();
+  const auth = useSelector((state) => state.firebase.auth);
   const [editingResource, setEditingResource] = useState(false);
 
   useFirestoreConnect([
     {
       collection: 'libraries',
-      doc: match.params.id,
-      subcollections: [{ collection: 'resources', doc: match.params.id3 }],
+      doc: id,
+      subcollections: [{ collection: 'resources', doc: id3 }],
       storeAs: 'resources',
+    },
+    {
+      collection: 'libraries',
+      doc: id,
     },
   ]);
 
   const resource = useSelector(
     (state) =>
       state.firestore.ordered.resources &&
-      state.firestore.ordered.resources.find((e) => e.id === match.params.id3)
+      state.firestore.ordered.resources.find((e) => e.id === id3)
+  );
+
+  const library = useSelector(
+    (state) =>
+      state.firestore.ordered.libraries &&
+      state.firestore.ordered.libraries.find((e) => e.id === id)
   );
 
   function handleDeletingResource(resourceId) {
-    history.push(`/library/${match.params.id}/section/${match.params.id2}`)
-    firestore.delete({collection: 'libraries',
-    doc: match.params.id,
-    subcollections: [{ collection: 'resources', doc: resourceId }],})
+    history.push(`/library/${id}/section/${id2}`);
+    firestore.delete({
+      collection: 'libraries',
+      doc: id,
+      subcollections: [{ collection: 'resources', doc: resourceId }],
+    });
   }
 
   if (isLoaded(resource)) {
@@ -36,27 +56,32 @@ function ResourceDetails({ match, history }) {
         <EditResourceForm
           resource={resource}
           setEditingResource={setEditingResource}
-          libraryId={match.params.id}
+          libraryId={id}
         />
       );
     } else {
       return (
         <>
           <h1>Resource</h1>
+
           <h2>{resource.resourceName}</h2>
-          <button
-            onClick={() => setEditingResource((state) => !state)}
-            style={{ marginRight: '5px' }}
-            className='btn deep-purple darken-4'
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => handleDeletingResource(resource.id)}
-            className='btn deep-purple darken-4'
-          >
-            Delete
-          </button>
+          {!auth.isEmpty && auth.uid === library.creatorId && (
+            <>
+              <button
+                onClick={() => setEditingResource((state) => !state)}
+                style={{ marginRight: '5px' }}
+                className='btn deep-purple darken-4'
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeletingResource(resource.id)}
+                className='btn deep-purple darken-4'
+              >
+                Delete
+              </button>
+            </>
+          )}
           <hr />
           <a href={resource.url}>{resource.url}</a>
           <p>{resource.description}</p>

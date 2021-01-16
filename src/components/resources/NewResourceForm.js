@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFirestore } from 'react-redux-firebase';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function NewResourceForm({ sectionId, setCreatingNewResource }) {
   const firestore = useFirestore();
   const { id } = useParams();
+  const auth = useSelector(state => state.firebase.auth);
 
   function addResourceToFirestore(event) {
     event.preventDefault();
@@ -21,7 +23,7 @@ function NewResourceForm({ sectionId, setCreatingNewResource }) {
         url: event.target.url.value,
         description: event.target.description.value,
         sectionId: sectionId,
-        creatorId: 'user1',
+        creatorId: auth.uid,
       });
   }
 

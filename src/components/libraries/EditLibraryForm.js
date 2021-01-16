@@ -5,14 +5,17 @@ import {
   useFirestoreConnect,
 } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 
-function EditLibraryForm({ match, history }) {
+function EditLibraryForm() {
   const firestore = useFirestore();
+  const {id } = useParams();
+  const history = useHistory();
 
-  useFirestoreConnect([{ collection: 'libraries', doc: match.params.id }]);
+  useFirestoreConnect([{ collection: 'libraries', doc: id }]);
   const library = useSelector(
     ({ firestore: { data } }) =>
-      data.libraries && data.libraries[match.params.id]
+      data.libraries && data.libraries[id]
   );
 
   function handleEditLibraryFormSubmission(event) {
@@ -21,10 +24,10 @@ function EditLibraryForm({ match, history }) {
       libraryName: event.target.libraryName.value,
     };
     firestore.update(
-      { collection: 'libraries', doc: match.params.id },
+      { collection: 'libraries', doc: id },
       propertiesToUpdate
     );
-    return history.push(`/library/${match.params.id}`);
+    return history.push(`/library/${id}`);
   }
 
   if (isLoaded(library)) {
@@ -45,7 +48,7 @@ function EditLibraryForm({ match, history }) {
             type='button'
             className='btn blue-grey lighten-1'
             style={{ marginLeft: '5px' }}
-            onClick={() => history.push(`/library/${match.params.id}`)}
+            onClick={() => history.push(`/library/${id}`)}
           >
             Cancel
           </button>
