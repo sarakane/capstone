@@ -1,5 +1,5 @@
 # _Resourcey_
-#### _Capstone project for Epicodus, Initialized: 2020.09.25, Last Updated: 2020.10.11_
+#### _Capstone project for Epicodus, Initialized: 2020.09.25, Last Updated: 2021.01.15_
 #### By _**Sara Kane**_
 
 ## Description
@@ -19,23 +19,23 @@ See [here](/Proposal.md) for capstone proposal.<br />
     <td>Users are able to create a resource library, add sections to that library, and add a resource to that section with full CRUD functionality</td>
   </tr>
   <tr>
-    <td></td>
+    <td>✔</td>
     <td>User registration (database storage)</td>
   </tr>
   <tr>
-    <td></td>
+    <td>✔</td>
     <td>User login/logout (database authentication)</td>
   </tr>
   <tr>
-    <td></td>
+    <td>✔</td>
     <td>Registered users can view another user’s resource library</td>
   </tr>
   <tr>
-    <td></td>
+    <td>✔</td>
     <td>Registered users can add a resource to another user’s resource library</td>
   </tr>
   <tr>
-    <td></td>
+    <td>✔</td>
     <td>Registered users can edit or delete resources they’ve added</td>
   </tr>
 </table>
